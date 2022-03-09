@@ -1,0 +1,50 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>后台管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <?php echo load_css(array(
+    "__CSS__/member.css"
+    )); ?>
+    <?php echo load_js(array(
+   "__JS__/jquery.min.js",
+   "__STATIC__/js/layui/layui.js",
+   "__STATIC__/js/xadmin.js",
+   "__JS__/login.js"
+    )); ?>
+
+</head>
+
+<body>
+    <div class="form_login">
+        <div class="left_logo">
+            <h1>后台管理系统</h1>
+            <!--<img src="__IMG__/login_lg.png"/>-->
+        </div>
+        <div class="warp">
+            <form method="post" class="layui-form">
+                <p>
+                    <input type="text" name="admin_name" class="txt_input username" lay-verify="required"
+                        placeholder="请填写用户名" lay-reqText="请填写用户名" />
+                </p>
+                <p>
+                    <input type="password" name="password" class="txt_input password" lay-verify="required"
+                        placeholder="请填写密码" lay-reqText="请填写密码" />
+                </p>
+                <p>
+                    <input type="text" name="code" class="txt_input code" lay-verify="required" placeholder="请填写验证码"
+                        lay-reqText="请填写验证码" />
+                    <span id="verify"><img src="<{:U(MODULE_NAME.'/Login/verify','','html')}>" /></span>
+                </p>
+                <p>
+                    <button type="submit" class="form_btn" lay-submit lay-filter="login">登&nbsp;录</button>
+                </p>
+            </form>
+        </div>
+
+    </div>
+</body>
+
+</html>
