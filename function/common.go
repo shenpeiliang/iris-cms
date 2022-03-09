@@ -2,14 +2,22 @@ package function
 
 import (
 	"html/template"
+	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/kataras/iris/v12/view"
 )
 
 //获取环境配置
 func GetEnv(key string, def string) string {
+	err := godotenv.Overload()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	v := os.Getenv(key)
+
 	if v == "" {
 		return def
 	}

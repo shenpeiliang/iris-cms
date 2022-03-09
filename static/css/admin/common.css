@@ -5,7 +5,7 @@ ol,ul{list-style:none;}
 a{color:#333;text-decoration:none}
 table{border-collapse:collapse;border-spacing:0;width:100%;}
 select{padding:2px;border:1px solid #ccc;}
-html{width:100%;height:100%;background:#2d55ca url(../images/cloud.jpg) repeat-x;}
+html{width:100%;height:100%;background:#2d55ca url(../../image/cloud.jpg) repeat-x;}
 body{color:#333;font-size:12px;font-family:""Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif";}
 .form_login{width:700px;margin:300px auto 0 auto;/*opacity: 0.6;background-color: rgb(0, 0, 0);*/}
 .form_login h1{margin-top:70px;font-family: "微软雅黑";color:#fff;font-size: 33px;height: 64px;line-height: 64px;text-align:center;}
@@ -16,9 +16,9 @@ body{color:#333;font-size:12px;font-family:""Segoe UI", "Lucida Grande", Helveti
 .form_login .warp{width:320px;text-align:left;float:left;padding:20px 30px 0 30px;background-color:#0858a7;-moz-border-radius: 4px; -webkit-border-radius: 4px;border-radius: 4px;}
 .form_login .warp p{height:55px;width:320px;margin-bottom:15px;}
 .form_login .warp .txt_input{padding:10px;width:260px;border-top:1px solid #ccc;border-left:1px solid #ccc;border-right:1px solid #ccc;border-bottom:1px solid #ccc;padding-left:45px;font-family:"微软雅黑";font-size:18px;}
-.form_login .warp .username{background:#fff url(../images/login.gif) no-repeat 0 -3px;}
-.form_login .warp .password{background:#fff url(../images/login.gif) no-repeat 0 -60px;}
-.form_login .warp .code{width:90px;float:left;background:#fff url(../images/icon-yanzhengma.png) 0 5px no-repeat;}
+.form_login .warp .username{background:#fff url(../../image/login.gif) no-repeat 0 -3px;}
+.form_login .warp .password{background:#fff url(../../image/login.gif) no-repeat 0 -60px;}
+.form_login .warp .code{width:90px;float:left;background:#fff url(../../image/icon-yanzhengma.png) 0 5px no-repeat;}
 .form_login .warp #verify{display:inline-block;cursor:pointer;width:160px;float:left;margin-left:10px;}
 .form_login .warp #verify img{display:inline-block;border:none;width:160px;height:45px;}
 .form_login .warp .form_btn{display:block;width:320px;text-align:center;margin:20px auto 0;*margin-top:18px;border:none;cursor:pointer;border-radius:2px;font-family:"微软雅黑";font-size:18px;height:45px;background-color:#fb830d;color:#fff; -moz-border-radius: 4px; -webkit-border-radius: 4px;border-radius: 4px;}

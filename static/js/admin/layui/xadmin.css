@@ -305,7 +305,7 @@ body {
 .x-slide_left {
     width: 17px;
     height: 61px;
-    background: url(../images/icon.png) 0 0 no-repeat;
+    background: url(../../image/icon.png) 0 0 no-repeat;
     position: absolute;
     top: 200px;
     left: 220px;
