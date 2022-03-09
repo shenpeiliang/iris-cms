@@ -1,6 +1,7 @@
 package function
 
 import (
+	"html/template"
 	"os"
 
 	"github.com/kataras/iris/v12/view"
@@ -19,16 +20,33 @@ func GetEnv(key string, def string) string {
 //注册视图函数
 func RegisterTemplateFun(tmpl *view.HTMLEngine) {
 	//css文件
-	tmpl.AddFunc("css", func(files ...string) (html string) {
+	tmpl.AddFunc("css", func(files ...string) template.HTML {
+		var html string
+
 		if len(files) < 1 {
-			return
+			return template.HTML(html)
 		}
 
 		for _, file := range files {
 
-			html += "<link  type='text/css' rel='stylesheet' href='" + file + "?v=" + GetEnv("STATIC_VERSION", "0.0.0") + "'/>\n"
+			html += "<link  type='text/css' rel='stylesheet' href='" + file + "?v=" + GetEnv("STATIC_VERSION", "0.0.0") + "'/>"
 		}
 
-		return html
+		return template.HTML(html)
+	})
+
+	//css文件
+	tmpl.AddFunc("js", func(files ...string) template.HTML {
+		var html string
+		if len(files) < 1 {
+			return template.HTML(html)
+		}
+
+		for _, file := range files {
+
+			html += "<script type='text/javascript' src='" + file + "?v=" + GetEnv("STATIC_VERSION", "0.0.0") + "'></script>"
+		}
+
+		return template.HTML(html)
 	})
 }

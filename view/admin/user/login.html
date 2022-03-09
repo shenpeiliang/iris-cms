@@ -5,15 +5,10 @@
 <head>
     <title>后台管理系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <?php echo load_css(array(
-    "__CSS__/member.css"
-    )); ?>
-    <?php echo load_js(array(
-   "__JS__/jquery.min.js",
-   "__STATIC__/js/layui/layui.js",
-   "__STATIC__/js/xadmin.js",
-   "__JS__/login.js"
-    )); ?>
+    {{css "/static/css/admin/common.css" }}
+
+    {{js "/static/js/admin/jquery.min.js" "/static/js/admin/layui/layui.js" "/static/js/admin/xadmin.js"
+    "/static/js/admin/login.js"}}
 
 </head>
 
