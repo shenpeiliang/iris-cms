@@ -4,14 +4,15 @@ import (
 	"cms/controller/admin"
 
 	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/hero"
 )
 
 func UserController(party iris.Party) {
-	party.PartyFunc("/user", func(user iris.Party) {
-		userController := admin.User{}
+	user := party.Party("/user")
+	userController := admin.User{}
 
-		user.Get("/login", userController.Login)
-		user.Get("/index", userController.Index)
-		user.Get("/check", userController.Check)
-	})
+	user.Get("/login", hero.Handler(userController.Login))
+	user.Get("/index", hero.Handler(userController.Index))
+	user.Get("/check", hero.Handler(userController.Check))
+	user.Get("/captcha", hero.Handler(userController.Captcha))
 }

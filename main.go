@@ -9,6 +9,9 @@ import (
 func main() {
 	app := iris.Default()
 
+	//调试模式
+	app.Logger().SetLevel("debug")
+
 	//配置初始化
 	config := iris.WithConfiguration(iris.YAML("./config/config.yml"))
 

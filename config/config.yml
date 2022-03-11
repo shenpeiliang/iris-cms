@@ -1,8 +1,12 @@
 FireMethodNotAllowed: true
+#/api/user 和 /api/user/ 在不重定向的情况下(常用场景)拥有相同的处理器
 DisableBodyConsumptionOnUnmarshal: true
+DisablePathCorrection: true
 TimeFormat: Mon, 01 Jan 2006 15:04:05 GMT
 Charset: UTF-8
 Other:
+    Cookie:
+       Name: iris-cms
     Database: 
        User: root
        Password: root
