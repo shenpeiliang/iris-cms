@@ -19,7 +19,6 @@ body{color:#333;font-size:12px;font-family:""Segoe UI", "Lucida Grande", Helveti
 .form_login .warp .username{background:#fff url(../../image/login.gif) no-repeat 0 -3px;}
 .form_login .warp .password{background:#fff url(../../image/login.gif) no-repeat 0 -60px;}
 .form_login .warp .code{width:90px;float:left;background:#fff url(../../image/icon-yanzhengma.png) 0 5px no-repeat;}
-.form_login .warp #verify{display:inline-block;cursor:pointer;width:160px;float:left;margin-left:10px;}
-.form_login .warp #verify img{display:inline-block;border:none;width:160px;height:45px;}
+.form_login .warp #verify{display:inline-block;background-color:#fff;cursor:pointer;width:160px;float:left;margin-left:10px;} .form_login .warp #verify img{display:inline-block;border:none;width:160px;height:45px;}
 .form_login .warp .form_btn{display:block;width:320px;text-align:center;margin:20px auto 0;*margin-top:18px;border:none;cursor:pointer;border-radius:2px;font-family:"微软雅黑";font-size:18px;height:45px;background-color:#fb830d;color:#fff; -moz-border-radius: 4px; -webkit-border-radius: 4px;border-radius: 4px;}
 .warp h1{line-height:35px;padding:15px 0;text-align:center;color:#337ab7}

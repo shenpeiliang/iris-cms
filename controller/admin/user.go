@@ -2,6 +2,7 @@ package admin
 
 import (
 	"bytes"
+	"time"
 
 	"github.com/dchest/captcha"
 	"github.com/kataras/iris/v12"
@@ -36,8 +37,8 @@ func (u User) Captcha(ctx iris.Context) {
 	//图形验证码
 	captchaId := captcha.NewLen(captcha.DefaultLen)
 
-	u.Common.SessionStart(ctx)
-	u.Common.Session.Set("captcha", captchaId)
+	/* u.Common.SessionStart(ctx)
+	u.Common.Session.Set("captcha", captchaId) */
 
 	//图形输出
 	ctx.Header("Cache-Control", "no-cache, no-store, must-revalidate")
@@ -48,5 +49,14 @@ func (u User) Captcha(ctx iris.Context) {
 
 	var writer bytes.Buffer
 
-	captcha.WriteImage(&writer, captchaId, width, height)
+	err := captcha.WriteImage(&writer, captchaId, width, height)
+	if err != nil {
+		ctx.JSON(map[string]string{
+			"code": "error",
+			"msg":  err.Error(),
+		})
+	}
+
+	ctx.ServeContent(bytes.NewReader(writer.Bytes()), captchaId+".png", time.Time{}, true)
+
 }

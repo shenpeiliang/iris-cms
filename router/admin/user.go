@@ -14,5 +14,5 @@ func UserController(party iris.Party) {
 	user.Get("/login", hero.Handler(userController.Login))
 	user.Get("/index", hero.Handler(userController.Index))
 	user.Get("/check", hero.Handler(userController.Check))
-	user.Get("/captcha", hero.Handler(userController.Captcha))
+	user.Get("/captcha/*", hero.Handler(userController.Captcha))
 }
