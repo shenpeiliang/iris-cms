@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"time"
 
-	"cms/controller"
+	"cms/middleware"
 
 	"github.com/dchest/captcha"
 	"github.com/kataras/iris/v12"
@@ -29,11 +29,23 @@ func (u User) Login(ctx iris.Context) {
 //登录检查
 func (u User) Check(ctx iris.Context) {
 	//session缓存
-	controller.SessionStart(ctx)
-	captchaId := controller.Session.GetStringDefault("captcha", "no data")
-	ctx.JSON(map[string]string{
-		"id": captchaId,
-	})
+
+	id := middleware.Session.Start(ctx).GetStringDefault("captcha", "no data")
+
+	code := ctx.PostValueDefault("code", "")
+
+	if captcha.VerifyString(id, code) {
+		ctx.JSON(map[string]string{
+			"code": "ok",
+			"msg":  "验证成功",
+		})
+	} else {
+		ctx.JSON(map[string]string{
+			"code": "fail",
+			"msg":  "验证失败",
+		})
+	}
+
 	//ctx.JSON(ctx.Application().ConfigurationReadOnly().GetOther())
 }
 
@@ -45,8 +57,7 @@ func (u User) Captcha(ctx iris.Context) {
 	captchaId := captcha.NewLen(captcha.DefaultLen)
 
 	//session缓存
-	controller.SessionStart(ctx)
-	controller.Session.Set("captcha", captchaId)
+	middleware.Session.Start(ctx).Set("captcha", captchaId)
 
 	//图形输出
 	ctx.Header("Cache-Control", "no-cache, no-store, must-revalidate")
