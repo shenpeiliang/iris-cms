@@ -19,7 +19,7 @@
             <!--<img src="__IMG__/login_lg.png"/>-->
         </div>
         <div class="warp">
-            <form method="post" class="layui-form">
+            <form method="post" action="/admin/user/check" class="layui-form">
                 <p>
                     <input type="text" name="admin_name" class="txt_input username" lay-verify="required"
                         placeholder="请填写用户名" lay-reqText="请填写用户名" />
@@ -31,7 +31,7 @@
                 <p>
                     <input type="text" name="code" class="txt_input code" lay-verify="required" placeholder="请填写验证码"
                         lay-reqText="请填写验证码" />
-                    <span id="verify"><img src="/admin/user/captcha/" /></span>
+                    <span id="verify"><img src="/admin/user/captcha" /></span>
                 </p>
                 <p>
                     <button type="submit" class="form_btn" lay-submit lay-filter="login">登&nbsp;录</button>

@@ -1,18 +1,19 @@
-package admin
+package controller
 
 import (
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/sessions"
 )
 
+var Session *sessions.Session
+
 type Common struct {
-	Session *sessions.Session
 }
 
 //启动session
-func (c Common) SessionStart(ctx iris.Context) {
+func SessionStart(ctx iris.Context) {
 	//session缓存
-	c.Session = sessions.New(sessions.Config{
+	Session = sessions.New(sessions.Config{
 		Cookie: sessions.DefaultCookieName,
 	}).Start(ctx)
 }
