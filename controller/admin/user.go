@@ -2,7 +2,7 @@ package admin
 
 import (
 	"bytes"
-	"fmt"
+	"reflect"
 	"strconv"
 	"time"
 
@@ -15,9 +15,9 @@ import (
 )
 
 type User struct {
-	UserName string `json:"admin_name" form:"admin_name" label:"用户名" validate:"required"`
-	Password string `json:"password" form:"password" label:"密码" validate:"required"`
-	Code     string `json:"code" form:"code" label:"验证码" validate:"required,len=6"`
+	UserName string `json:"admin_name" form:"admin_name" error-required:"请填写用户名" error-strlen:"请填写用户名" validate:"required,strlen=5"`
+	Password string `json:"password" form:"password" error-required:"请填写用户密码" validate:"required"`
+	Code     string `json:"code" form:"code" error-len:"请填写6位长度的验证码" error-required:"请填写6位长度的验证码" validate:"required,len=6"`
 }
 
 //登录
@@ -26,14 +26,15 @@ func (u User) Login(ctx iris.Context) {
 }
 
 //自定义验证规则
-func UserStructValidation(sl validator.StructLevel) {
-	/* user := sl.Current().Interface().(User)
+func strLenFunc(fl validator.FieldLevel) bool {
+	param, _ := strconv.Atoi(fl.Param())
 
-	//自定义规则
-	codeLen := len(user.Code)
-	if codeLen != 6 {
-		sl.ReportError(user.Code, "code", "Code", "len", "6")
-	} */
+	valueLen := len(fl.Field().String())
+
+	if valueLen < param {
+		return false
+	}
+	return true
 }
 
 //登录检查
@@ -56,8 +57,8 @@ func (u User) Check(ctx iris.Context) {
 
 	validate := validator.New()
 
-	//注册验证方法
-	validate.RegisterStructValidation(UserStructValidation, data)
+	//注册自定义验证规则
+	validate.RegisterValidation("strlen", strLenFunc)
 
 	if err := validate.Struct(data); err != nil {
 		//是否空值
@@ -71,13 +72,16 @@ func (u User) Check(ctx iris.Context) {
 
 		errs := err.(validator.ValidationErrors)
 		for _, e := range errs {
-			if e.StructField() == "Code" && e.Tag() == "len" {
+			fieldName := e.Field()
+			//反射获取其他标签信息
+			field, ok := reflect.TypeOf(u).FieldByName(fieldName)
+			errInfo := field.Tag.Get("error-" + e.Tag())
 
-				maxLen, _ := strconv.Atoi(e.Param())
-
+			if ok {
 				ctx.JSON(map[string]string{
 					"code": "fail",
-					"msg":  fmt.Sprintf("请填写%d位长度的验证码", maxLen),
+					//"msg":  fmt.Sprintf("%v", field),
+					"msg": errInfo,
 				})
 				return
 			}
