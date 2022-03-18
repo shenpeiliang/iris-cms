@@ -13,7 +13,7 @@ type Member struct {
 	Dateline uint
 }
 
-func (m Member) Login(uname, password string) error {
+func (m Member) Login(uname, password string) (Member, error) {
 	var data Member
 	util.DB.Where(&Member{
 		UserName: uname,
@@ -22,10 +22,10 @@ func (m Member) Login(uname, password string) error {
 
 	//记录是否存在
 	if data.ID < 1 {
-		return errors.New("用户不存在或密码错误")
+		return data, errors.New("用户不存在或密码错误")
 	}
 
 	//密码校验
 
-	return nil
+	return data, nil
 }

@@ -1,6 +1,9 @@
 package model
 
-import "cms/util"
+import (
+	"cms/util"
+	"errors"
+)
 
 type Article struct {
 	ID          uint `gorm:"primary_key"`
@@ -13,11 +16,15 @@ type Article struct {
 }
 
 //获取一条记录
-func (a Article) Get(id uint) Article {
+func (a Article) Get(id uint) (Article, error) {
 	var data Article
 	util.DB.Where(&Article{
 		ID: id,
 	}).First(&data)
 
-	return data
+	if data.ID < 1 {
+		return data, errors.New("记录不存在")
+	}
+
+	return data, nil
 }
