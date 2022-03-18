@@ -17,6 +17,7 @@ require (
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
+	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang/protobuf v1.4.1 // indirect
 	github.com/google/uuid v1.1.2-0.20200519141726-cb32006e483f // indirect
 	github.com/gorilla/css v1.0.0 // indirect
@@ -26,6 +27,8 @@ require (
 	github.com/iris-contrib/jade v1.1.4 // indirect
 	github.com/iris-contrib/pongo2 v0.0.1 // indirect
 	github.com/iris-contrib/schema v0.0.2 // indirect
+	github.com/jinzhu/gorm v1.9.16 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/kataras/golog v0.1.7 // indirect
