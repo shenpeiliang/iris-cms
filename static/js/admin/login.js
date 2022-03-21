@@ -1,6 +1,4 @@
-/**
- * 活动管理列表
- */
+
 !function () {
     layui.use(['form', 'ie_version'], function () {
         var form = layui.form;
@@ -38,13 +36,15 @@
                 type: 'post',
                 dataType: 'json',
                 success: function (res) {
-                    if (res.code == 'success') {
-                        layer.msg(res.data, { icon: 6 }, function (index) {
+                    if (res.code == '200') {
+                        layer.msg(res.msg, { icon: 6 }, function (index) {
                             layer.close(index)
-                            window.location.href = res.url
+                            if (res.data.url) {
+                                window.location.href = res.data.url
+                            }
                         });
                     } else {
-                        layer.msg(res.data, { icon: 5 }, function (index) {
+                        layer.msg(res.msg, { icon: 5 }, function (index) {
                             layer.close(index)
                             $('#verify img').trigger('click')
                         });

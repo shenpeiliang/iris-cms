@@ -7,7 +7,3 @@ Charset: UTF-8
 Other:
     Cookie:
        Name: iris-cms
-    Database: 
-       User: root
-       Password: root
-       Port: 3306

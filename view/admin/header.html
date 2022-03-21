@@ -1,0 +1,65 @@
+{{ define "header.html"}}
+<!doctype html>
+<html class="x-admin-sm">
+
+<head>
+    <title>后台信息管理系统</title>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="shortcut icon" href="__STATIC__/images/favicon.ico" type="image/x-icon">
+
+    <?php echo load_css(array(
+    "__STATIC__/js/layui/xadmin.css",
+    "__CSS__/edit.css",
+   "__CSS__/common.css"
+    )); ?>
+    <?php echo load_js(array(
+   "__JS__/jquery.min.js",
+   "__STATIC__/js/layui/layui.js",
+   "__STATIC__/js/xadmin.js",
+   "__JS__/index.js",
+   "__STATIC__/js/search.js"
+    )); ?>
+
+    <script type="text/javascript">
+        var recommend_uri = "<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/recommend','','')}>";
+        var user_auth_uri = "<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/is_auth','','')}>";
+        var state_uri = "<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/is_show','','')}>";
+        var del_url = "<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del_all','','')}>";
+        var order_url = "<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/paixu','','')}>";
+        var email_url = "<{:U(MODULE_NAME.'/Member/email','','html')}>";
+        //var linkage_url="<{:U(MODULE_NAME.'/Address/link','','html')}>";
+        var linkage_url = "/tool/main/get_linkage.html";
+        var worker_url = "/tool/main/get_worker.html";
+
+        var catid_url = "<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/catid','','')}>";
+        var baidu_send = "<{:U(MODULE_NAME.'/Seo/send','','')}>";
+        var create_menu = "<{:U(MODULE_NAME.'/Weixin/create','','')}>";
+        var pic_del = "<{:U(MODULE_NAME.'/Image/del','','html')}>";
+    </script>
+    <title>
+        <{$config.title}> 后台管理系统
+    </title>
+</head>
+
+<body>
+    <div class="top">
+        <div class="top_1">
+            <ul>
+                <!--<li><a href="/" target="_blank" class="style_13">站点首页</a></li>-->
+                <li><a href="<{:U('Index/index','','html')}>" class="style_14 <{$style_top_1}>">管理首页</a></li>
+                <li><a href="<{:U('Change/index','','html')}>" class="style_31 <{$style_top_2}>">切换城市
+                        <if condition="$curent_city_id neq ''">[<span class="curent_city_name">
+                                <{$curent_city_name}>
+                            </span>]
+                        </if>
+                    </a></li>
+                <li><a href="<{:U('Login/out','','html')}>" class="style_11">安全退出</a></li>
+                <li style="float:right"><a href="javascript:void(0);" class="style_12">当前管理者：<{$admin_name}></a></li>
+            </ul>
+        </div>
+    </div>
+    {{end}}

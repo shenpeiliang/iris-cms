@@ -13,6 +13,7 @@ type Member struct {
 	Dateline uint
 }
 
+//用户登录
 func (m Member) Login(uname, password string) (Member, error) {
 	var data Member
 	util.DB.Where(&Member{

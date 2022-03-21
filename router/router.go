@@ -28,7 +28,7 @@ func RegisterRouter(app *iris.Application) {
 	//路由分组
 	app.PartyFunc("/admin", func(party iris.Party) {
 		//路由注册
-		admin.UserController(party)
+		admin.InitAdmin(party)
 
 	})
 

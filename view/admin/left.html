@@ -1,0 +1,10 @@
+{{ define "left.html"}}
+<div class="main_left">
+    <div class="free-section"></div>
+    <div class="left_top"></div>
+    <dl class="is_show {{.ActiveMenu.Parent}}">
+        <dt class="style_1">图文管理</dt>
+        <dd><a href="/admin/article/lists" {{.ActiveMenu.Child}}>>图文管理</a></dd>
+    </dl>
+</div>
+{{end}}

@@ -1,0 +1,105 @@
+{{template "header.html"}}
+<div class="main">
+    {{template "left.html"}}
+    <div class="main_right">
+        <div class="right_1">
+            <!--右边导航s-->
+            <div class="right_1_1">
+                <div class="nav_left">
+                    <a href="javascript:;" data-uri="/add',['tid' => $target_id],'html')}>"
+                        class="nav_current add event-form">添加<{$act}></a>
+                </div>
+                <div class="nav_right">
+                    <form action="<{$url_current}>" method="get" class="layui-form">
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" name="keyword" placeholder="请输入关键词" autocomplete="off" value="">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="submit" name="submit" value="搜索" class="layui-btn">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--右边导航e-->
+            <div class="right_1_2">
+                <table cellspacing="0" cellpadding="0" class="list_table layui-table layui-form">
+                    <tr>
+                        <th width="30"><input type="checkbox" lay-filter="f_checkall" lay-skin="primary"></th>
+                        <th width="30">ID</th>
+                        <th><i class="require-red">*</i>标题</th>
+                        <th>图片</th>
+                        <th>点击量</th>
+                        <th width="120">添加时间</th>
+                        <th width="120">操作时间</th>
+                        <th width="60">排序</th>
+                        <th>显示/隐藏</th>
+                        <th>操作</th>
+                    </tr>
+                    <if condition="$data">
+                        <foreach name="data" item="list">
+                            <tr class="info">
+                                <td>
+                                    <input type="checkbox" class="J_FCheckbox" name="selected_id[]" lay-skin="primary"
+                                        value="<{$list.id}>">
+                                </td>
+                                <td>
+                                    <{$list.id}>
+                                </td>
+                                <td>
+                                    <{$list.title|htmlspecialchars_decode=###}>
+                                </td>
+                                <td>
+                                    <if condition="$list[img]">
+                                        <img src="<{$list.img|htmlspecialchars_decode=###}>" height="65" />
+                                    </if>
+
+                                </td>
+                                <td>
+                                    <{$list.click}>
+                                </td>
+                                <td>
+                                    <{$list.add_time|date="Y-m-d H:i:s",###}>
+                                </td>
+                                <td>
+                                    <{$list.dateline|date="Y-m-d H:i:s",###}>
+                                </td>
+                                <td>
+                                    <input type="text" name="paixu[]" class="input_txt sort-input"
+                                        value="<{$list.paixu}>" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="switch" data-id="<{$list.id}>" lay-filter="state"
+                                        lay-skin="switch" lay-text="显示|隐藏" <if condition="$list.is_show eq 1">checked
+                    </if>
+                    >
+                    </td>
+                    <td width="160px" class="handle">
+                        <a href="javascript:;"
+                            data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id' => $list[id]),'html')}>"
+                            class="event-form">编辑</a>
+                        &nbsp;|&nbsp;
+                        <a href="javascript:;" class="event-delete"
+                            data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$list[id]),'html')}>">删除</a>
+                    </td>
+                    </tr>
+                    </foreach>
+                    <tr>
+                        <td colspan="10" class="buttontd">
+                            <a href="javascript:void(0);" id="batchDel">删除</a>
+                            <a href="javascript:void(0);" id="updateOrd">排序</a>
+                        </td>
+                    </tr>
+                    <else />
+                    <tr>
+                        <td colspan="10" style="text-align:center">无数据..</td>
+                    </tr>
+                    </if>
+                </table>
+                <div class="listpage">
+                    <{$page}>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{template "footer.html"}}

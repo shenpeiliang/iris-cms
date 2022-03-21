@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"cms/middleware"
+	"cms/util"
 
 	"github.com/dchest/captcha"
 	"gopkg.in/go-playground/validator.v9"
@@ -78,40 +79,30 @@ func (u User) Check(ctx iris.Context) {
 			errInfo := field.Tag.Get("error-" + e.Tag())
 
 			if ok {
-				ctx.JSON(map[string]string{
-					"code": "fail",
-					//"msg":  fmt.Sprintf("%v", field),
-					"msg": errInfo,
-				})
+				util.Response.Fail(ctx, errInfo)
 				return
 			}
 		}
 
-		ctx.JSON(map[string]string{
-			"code": "fail",
-			"msg":  err.Error(),
-		})
+		util.Response.Fail(ctx, err.Error())
 		return
 	}
 
 	//session缓存
-	id := middleware.Session.Start(ctx).GetStringDefault("captcha", "no data")
+	id := middleware.Session.Start(ctx).GetStringDefault("captcha", "")
 
 	code := ctx.PostValueDefault("code", "")
 
-	if captcha.VerifyString(id, code) {
-		ctx.JSON(map[string]string{
-			"code": "ok",
-			"msg":  "验证成功",
-		})
-	} else {
-		ctx.JSON(map[string]string{
-			"code": "fail",
-			"msg":  "验证失败",
-		})
+	if ok := captcha.VerifyString(id, code); !ok {
+		util.Response.Fail(ctx, "验证码错误")
+		return
 	}
 
-	//ctx.JSON(ctx.Application().ConfigurationReadOnly().GetOther())
+	result := iris.Map{
+		"url": "/admin/article/lists",
+	}
+
+	util.Response.Success(ctx, "登录成功", result)
 }
 
 //图形验证码
