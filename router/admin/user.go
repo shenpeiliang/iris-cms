@@ -11,7 +11,7 @@ func RegisterUser(party iris.Party) {
 	user := party.Party("/user")
 	userController := admin.User{}
 
-	user.Get("/login", hero.Handler(userController.Login))
-	user.Post("/check", hero.Handler(userController.Check))
-	user.Get("/captcha", hero.Handler(userController.Captcha))
+	user.Get("/login", hero.Handler(userController.Login)).Name = "/admin/user/login"
+	user.Post("/check", hero.Handler(userController.Check)).Name = "/admin/user/check"
+	user.Get("/captcha", hero.Handler(userController.Captcha)).Name = "/admin/user/captcha"
 }

@@ -5,10 +5,10 @@
 <head>
     <title>后台管理系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    {{css "/static/css/admin/common.css" }}
+    {{css "/static/admin/css/member.css" }}
 
-    {{js "/static/js/admin/jquery.min.js" "/static/js/admin/layui/layui.js" "/static/js/admin/xadmin.js"
-    "/static/js/admin/login.js"}}
+    {{js "/static/admin/js/jquery.min.js" "/static/js/layui/layui.js" "/static/js/xadmin.js"
+    "/static/admin/js/login.js"}}
 
 </head>
 
@@ -16,10 +16,9 @@
     <div class="form_login">
         <div class="left_logo">
             <h1>后台管理系统</h1>
-            <!--<img src="__IMG__/login_lg.png"/>-->
         </div>
         <div class="warp">
-            <form method="post" action="/admin/user/check" class="layui-form">
+            <form method="post" action='{{ urlpath "/admin/user/check" }}' class="layui-form">
                 <p>
                     <input type="text" name="admin_name" class="txt_input username" lay-verify="required"
                         placeholder="请填写用户名" lay-reqText="请填写用户名" />
@@ -31,7 +30,7 @@
                 <p>
                     <input type="text" name="code" class="txt_input code" lay-verify="required" placeholder="请填写验证码"
                         lay-reqText="请填写验证码" />
-                    <span id="verify"><img src="/admin/user/captcha" /></span>
+                    <span id="verify"><img src='{{ urlpath "/admin/user/captcha" }}' /></span>
                 </p>
                 <p>
                     <button type="submit" class="form_btn" lay-submit lay-filter="login">登&nbsp;录</button>

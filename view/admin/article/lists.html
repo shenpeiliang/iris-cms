@@ -6,11 +6,11 @@
             <!--右边导航s-->
             <div class="right_1_1">
                 <div class="nav_left">
-                    <a href="javascript:;" data-uri="/add',['tid' => $target_id],'html')}>"
-                        class="nav_current add event-form">添加<{$act}></a>
+                    <a href="javascript:;" data-uri='{{urlpath "/admin/article/add"}}'
+                        class="nav_current add event-form">添加{{.act}}</a>
                 </div>
                 <div class="nav_right">
-                    <form action="<{$url_current}>" method="get" class="layui-form">
+                    <form action='' method="get" class="layui-form">
                         <div class="layui-inline layui-show-xs-block">
                             <input class="layui-input" name="keyword" placeholder="请输入关键词" autocomplete="off" value="">
                         </div>
@@ -40,63 +40,61 @@
                             <tr class="info">
                                 <td>
                                     <input type="checkbox" class="J_FCheckbox" name="selected_id[]" lay-skin="primary"
-                                        value="<{$list.id}>">
+                                        value="{{.list.id}}">
                                 </td>
                                 <td>
-                                    <{$list.id}>
+                                    {{.list.id}}
                                 </td>
                                 <td>
-                                    <{$list.title|htmlspecialchars_decode=###}>
+                                    {{.list.title}}
                                 </td>
                                 <td>
-                                    <if condition="$list[img]">
-                                        <img src="<{$list.img|htmlspecialchars_decode=###}>" height="65" />
-                                    </if>
+
+                                    <img src="{{.list.img}}" height="65" />
+
 
                                 </td>
                                 <td>
-                                    <{$list.click}>
+                                    {{.list.click}}
                                 </td>
                                 <td>
-                                    <{$list.add_time|date="Y-m-d H:i:s",###}>
+                                    {{.list.add_time}}
                                 </td>
                                 <td>
-                                    <{$list.dateline|date="Y-m-d H:i:s",###}>
+                                    {{.list.dateline}}
                                 </td>
                                 <td>
                                     <input type="text" name="paixu[]" class="input_txt sort-input"
-                                        value="<{$list.paixu}>" />
+                                        value="{{.list.paixu}}" />
                                 </td>
                                 <td>
-                                    <input type="checkbox" name="switch" data-id="<{$list.id}>" lay-filter="state"
-                                        lay-skin="switch" lay-text="显示|隐藏" <if condition="$list.is_show eq 1">checked
-                    </if>
-                    >
-                    </td>
-                    <td width="160px" class="handle">
-                        <a href="javascript:;"
-                            data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id' => $list[id]),'html')}>"
-                            class="event-form">编辑</a>
-                        &nbsp;|&nbsp;
-                        <a href="javascript:;" class="event-delete"
-                            data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$list[id]),'html')}>">删除</a>
-                    </td>
-                    </tr>
-                    </foreach>
-                    <tr>
-                        <td colspan="10" class="buttontd">
-                            <a href="javascript:void(0);" id="batchDel">删除</a>
-                            <a href="javascript:void(0);" id="updateOrd">排序</a>
-                        </td>
-                    </tr>
-                    <else />
-                    <tr>
-                        <td colspan="10" style="text-align:center">无数据..</td>
-                    </tr>
+                                    <input type="checkbox" name="switch" data-id="{{.list.id}}" lay-filter="state"
+                                        lay-skin="switch" lay-text="显示|隐藏" checked>
+                                </td>
+                                <td width="160px" class="handle">
+                                    <a href="javascript:;"
+                                        data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id' => $list[id]),'html')}}"
+                                        class="event-form">编辑</a>
+                                    &nbsp;|&nbsp;
+                                    <a href="javascript:;" class="event-delete"
+                                        data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$list[id]),'html')}}">删除</a>
+                                </td>
+                            </tr>
+                        </foreach>
+                        <tr>
+                            <td colspan="10" class="buttontd">
+                                <a href="javascript:void(0);" id="batchDel">删除</a>
+                                <a href="javascript:void(0);" id="updateOrd">排序</a>
+                            </td>
+                        </tr>
+                        <else />
+                        <tr>
+                            <td colspan="10" style="text-align:center">无数据..</td>
+                        </tr>
                     </if>
                 </table>
                 <div class="listpage">
-                    <{$page}>
+                    {{.page}}
                 </div>
             </div>
         </div>
