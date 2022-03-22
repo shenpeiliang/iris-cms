@@ -1,6 +1,6 @@
-{{template "header.html"}}
+{{render "header.html"}}
 <div class="main">
-    {{template "left.html"}}
+    {{render "left.html"}}
     <div class="main_right">
         <div class="right_1">
             <!--右边导航s-->
@@ -10,7 +10,7 @@
                         class="nav_current add event-form">添加{{.act}}</a>
                 </div>
                 <div class="nav_right">
-                    <form action='' method="get" class="layui-form">
+                    <form action='{{.CommonData.CurrentPath}}' method="get" class="layui-form">
                         <div class="layui-inline layui-show-xs-block">
                             <input class="layui-input" name="keyword" placeholder="请输入关键词" autocomplete="off" value="">
                         </div>
@@ -100,4 +100,4 @@
         </div>
     </div>
 </div>
-{{template "footer.html"}}
+{{render "footer.html"}}
