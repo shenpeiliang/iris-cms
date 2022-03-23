@@ -18,17 +18,19 @@ func (a Article) Lists(ctx iris.Context) {
 		pageNum   uint
 		pageCount uint
 		offset    uint
+
+		where map[string]interface{}
 	)
 
 	offset = 0
 	pageCount = 10
 
-	data, _ := model.Article{}.Page(offset, pageCount)
+	data, _ := model.Article{}.Page(where, offset, pageCount)
 
-	count, _ := model.Article{}.Count()
+	count, _ := model.Article{}.Count(where)
 
 	if count > 0 {
-		math.Ceil(float64(count) / float64(pageCount))
+		pageNum = uint(math.Ceil(float64(count) / float64(pageCount)))
 	}
 
 	ctx.ViewData("data", iris.Map{

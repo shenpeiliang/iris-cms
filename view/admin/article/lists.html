@@ -7,7 +7,7 @@
             <div class="right_1_1">
                 <div class="nav_left">
                     <a href="javascript:;" data-uri='{{urlpath "/admin/article/add"}}'
-                        class="nav_current add event-form">添加{{.act}}</a>
+                        class="nav_current add event-form">添加{{.data.act}}</a>
                 </div>
                 <div class="nav_right">
                     <form action='{{.CommonData.CurrentPath}}' method="get" class="layui-form">
@@ -35,62 +35,64 @@
                         <th>显示/隐藏</th>
                         <th>操作</th>
                     </tr>
-                    <if condition="$data">
-                        <foreach name="data" item="list">
-                            <tr class="info">
-                                <td>
-                                    <input type="checkbox" class="J_FCheckbox" name="selected_id[]" lay-skin="primary"
-                                        value="{{.list.id}}">
-                                </td>
-                                <td>
-                                    {{.list.id}}
-                                </td>
-                                <td>
-                                    {{.list.title}}
-                                </td>
-                                <td>
 
-                                    <img src="{{.list.img}}" height="65" />
+                    {{range .data.rows}}
+                    <tr class="info">
+                        <td>
+                            <input type="checkbox" class="J_FCheckbox" name="selected_id[]" lay-skin="primary"
+                                value="{{.ID}}">
+                        </td>
+                        <td>
+                            {{.ID}}
+                        </td>
+                        <td>
+                            {{.Title}}
+                        </td>
+                        <td>
+                            {{if .Img }}
+                            <img src="{{.Img}}" height="65" />
+                            {{else}}
+                            -
+                            {{end}}
 
+                        </td>
+                        <td>
+                            {{.Click}}
+                        </td>
+                        <td>
+                            {{.AddTime}}
+                        </td>
+                        <td>
+                            {{.Dateline}}
+                        </td>
+                        <td>
+                            <input type="text" name="paixu[]" class="input_txt sort-input" value="{{.Paixu}}" />
+                        </td>
+                        <td>
+                            <input type="checkbox" name="switch" data-id="{{.ID}}" lay-filter="state" lay-skin="switch"
+                                lay-text="显示|隐藏" checked>
+                        </td>
+                        <td width="160px" class="handle">
+                            <a href="javascript:;"
+                                data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id' => $list[id]),'html')}}"
+                                class="event-form">编辑</a>
+                            &nbsp;|&nbsp;
+                            <a href="javascript:;" class="event-delete"
+                                data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$list[id]),'html')}}">删除</a>
+                        </td>
+                    </tr>
+                    {{end}}
+                    <tr>
+                        <td colspan="10" class="buttontd">
+                            <a href="javascript:void(0);" id="batchDel">删除</a>
+                            <a href="javascript:void(0);" id="updateOrd">排序</a>
+                        </td>
+                    </tr>
 
-                                </td>
-                                <td>
-                                    {{.list.click}}
-                                </td>
-                                <td>
-                                    {{.list.add_time}}
-                                </td>
-                                <td>
-                                    {{.list.dateline}}
-                                </td>
-                                <td>
-                                    <input type="text" name="paixu[]" class="input_txt sort-input"
-                                        value="{{.list.paixu}}" />
-                                </td>
-                                <td>
-                                    <input type="checkbox" name="switch" data-id="{{.list.id}}" lay-filter="state"
-                                        lay-skin="switch" lay-text="显示|隐藏" checked>
-                                </td>
-                                <td width="160px" class="handle">
-                                    <a href="javascript:;"
-                                        data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id' => $list[id]),'html')}}"
-                                        class="event-form">编辑</a>
-                                    &nbsp;|&nbsp;
-                                    <a href="javascript:;" class="event-delete"
-                                        data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$list[id]),'html')}}">删除</a>
-                                </td>
-                            </tr>
-                        </foreach>
-                        <tr>
-                            <td colspan="10" class="buttontd">
-                                <a href="javascript:void(0);" id="batchDel">删除</a>
-                                <a href="javascript:void(0);" id="updateOrd">排序</a>
-                            </td>
-                        </tr>
-                        <else />
+                    <!-- <else />
                         <tr>
                             <td colspan="10" style="text-align:center">无数据..</td>
-                        </tr>
+                        </tr> -->
                     </if>
                 </table>
                 <div class="listpage">

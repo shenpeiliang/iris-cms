@@ -13,6 +13,9 @@ type Article struct {
 	Img         string
 	AddTime     uint `gorm:"column:add_time"`
 	Dateline    uint
+	Click       uint
+	Paixu       uint
+	IsShow      byte `gorm:"column:is_show"`
 }
 
 //获取一条记录
@@ -29,12 +32,13 @@ func (a Article) Get(id uint) (Article, error) {
 	return data, nil
 }
 
-//获取
-func (a Article) Page(offset, limit uint) ([]Article, error) {
+//分页数据
+func (a Article) Page(where map[string]interface{}, offset, limit uint) ([]Article, error) {
 	var (
 		data []Article
 	)
-	util.DB.Offset(offset).Limit(limit).Find(&data)
+
+	util.DB.Where(where).Offset(offset).Limit(limit).Find(&data)
 
 	if len(data) < 1 {
 		return data, errors.New("记录不存在")
@@ -44,12 +48,12 @@ func (a Article) Page(offset, limit uint) ([]Article, error) {
 }
 
 //统计数
-func (a Article) Count() (uint, error) {
+func (a Article) Count(where map[string]interface{}) (uint, error) {
 
 	var (
 		count uint
 	)
-	util.DB.Model(Article{}).Count(&count)
+	util.DB.Model(Article{}).Where(where).Count(&count)
 
 	return count, nil
 }
