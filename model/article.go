@@ -15,8 +15,6 @@ type Article struct {
 	Dateline    uint
 }
 
-var ArticleModel = new(Article)
-
 //获取一条记录
 func (a Article) Get(id uint) (Article, error) {
 	var data Article
@@ -32,18 +30,26 @@ func (a Article) Get(id uint) (Article, error) {
 }
 
 //获取
-func (a Article) Page(offset, limit uint) ([]Article, uint, error) {
+func (a Article) Page(offset, limit uint) ([]Article, error) {
 	var (
-		data  []Article
-		count uint
+		data []Article
 	)
-	util.DB.Offset(offset).Limit(limit).First(&data)
-
-	util.DB.Count(&count)
+	util.DB.Offset(offset).Limit(limit).Find(&data)
 
 	if len(data) < 1 {
-		return data, count, errors.New("记录不存在")
+		return data, errors.New("记录不存在")
 	}
 
-	return data, count, nil
+	return data, nil
+}
+
+//统计数
+func (a Article) Count() (uint, error) {
+
+	var (
+		count uint
+	)
+	util.DB.Model(Article{}).Count(&count)
+
+	return count, nil
 }

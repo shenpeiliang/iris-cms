@@ -2,6 +2,7 @@ package admin
 
 import (
 	"cms/model"
+	"cms/util"
 	"math"
 
 	"github.com/kataras/iris/v12"
@@ -22,7 +23,9 @@ func (a Article) Lists(ctx iris.Context) {
 	offset = 0
 	pageCount = 10
 
-	data, count, _ := model.ArticleModel.Page(offset, pageCount)
+	data, _ := model.Article{}.Page(offset, pageCount)
+
+	count, _ := model.Article{}.Count()
 
 	if count > 0 {
 		math.Ceil(float64(count) / float64(pageCount))
@@ -38,7 +41,15 @@ func (a Article) Lists(ctx iris.Context) {
 }
 
 func (a Article) Form(ctx iris.Context) {
-	ctx.ViewData("message", "Hello world!")
+	id := ctx.Params().GetUint64Default("id", 0)
+	data, err := model.Article{}.Get(uint(id))
+
+	if err != nil {
+		util.Response.Fail(ctx, "记录不存在")
+		return
+	}
+
+	ctx.ViewData("data", data)
 	ctx.View("admin/article/form.html")
 }
 

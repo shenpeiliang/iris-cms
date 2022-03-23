@@ -13,7 +13,7 @@
                 layer.open({
                     title: '提示',
                     content: '您的浏览器过旧，请升级浏览器！',
-                    end: function() {
+                    end: function () {
                         location.href = 'https://www.google.cn/intl/zh-CN/chrome/';
                     }
                 });
@@ -33,18 +33,21 @@
         form.on('submit(login)', function (data) {
             layer.load();
             $.ajax({
-                url:  '/admin/login/index',
+                url: data.form.action,
                 data: data.field,
                 type: 'post',
                 dataType: 'json',
                 success: function (res) {
-                    if (res.code == 'success') {
-                        layer.msg(res.data, {icon: 6}, function (index) {
+                    if (res.code == '200') {
+                        layer.msg(res.msg, { icon: 6 }, function (index) {
                             layer.close(index)
-                            window.location.href = res.url
+                            if (res.data.url) {
+                                window.location.href = res.data.url
+                            }
+
                         });
                     } else {
-                        layer.msg(res.data, {icon: 5}, function (index) {
+                        layer.msg(res.msg, { icon: 5 }, function (index) {
                             layer.close(index)
                             $('#verify img').trigger('click')
                         });
