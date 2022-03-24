@@ -4,7 +4,10 @@ import (
 	"html/template"
 	"log"
 	"os"
+	"strings"
+	"time"
 
+	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/joho/godotenv"
 	"github.com/kataras/iris/v12/view"
 )
@@ -57,4 +60,32 @@ func RegisterTemplateFun(tmpl *view.HTMLEngine) {
 
 		return template.HTML(html)
 	})
+
+	//url链接
+	tmpl.AddFunc("urlHtmlAttr", func(url string, param interface{}) template.HTMLAttr {
+		return template.HTMLAttr(url + gconv.String(param))
+	})
+
+	//时间格式化
+	tmpl.AddFunc("date", func(t uint, format string) (ret string) {
+		if t == 0 {
+			return
+		}
+
+		fm := map[string]string{
+			"Y": "2006",
+			"m": "01",
+			"d": "02",
+			"H": "15",
+			"i": "04",
+			"s": "05",
+		}
+
+		for k, v := range fm {
+			format = strings.Replace(format, k, v, 1)
+		}
+
+		return time.Unix(int64(t), 0).Format(format)
+	})
+
 }

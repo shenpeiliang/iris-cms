@@ -38,7 +38,15 @@ func (a Article) Page(where map[string]interface{}, offset, limit uint) ([]Artic
 		data []Article
 	)
 
-	util.DB.Where(where).Offset(offset).Limit(limit).Find(&data)
+	db := util.DB
+
+	if len(where) > 0 {
+		for key, value := range where {
+			db = db.Where(key, value)
+		}
+	}
+
+	db.Offset(offset).Limit(limit).Find(&data)
 
 	if len(data) < 1 {
 		return data, errors.New("记录不存在")
@@ -53,7 +61,15 @@ func (a Article) Count(where map[string]interface{}) (uint, error) {
 	var (
 		count uint
 	)
-	util.DB.Model(Article{}).Where(where).Count(&count)
+
+	db := util.DB
+	if len(where) > 0 {
+		for key, value := range where {
+			db = db.Where(key, value)
+		}
+	}
+
+	db.Model(Article{}).Count(&count)
 
 	return count, nil
 }

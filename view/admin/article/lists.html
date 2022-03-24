@@ -15,7 +15,7 @@
                             <input class="layui-input" name="keyword" placeholder="请输入关键词" autocomplete="off" value="">
                         </div>
                         <div class="layui-inline layui-show-xs-block">
-                            <input type="submit" name="submit" value="搜索" class="layui-btn">
+                            <input type="submit" value="搜索" class="layui-btn">
                         </div>
                     </form>
                 </div>
@@ -60,25 +60,24 @@
                             {{.Click}}
                         </td>
                         <td>
-                            {{.AddTime}}
+                            {{date .AddTime "Y-m-d H:i:s"}}
                         </td>
                         <td>
-                            {{.Dateline}}
+                            {{date .Dateline "Y-m-d H:i:s"}}
                         </td>
                         <td>
                             <input type="text" name="paixu[]" class="input_txt sort-input" value="{{.Paixu}}" />
                         </td>
                         <td>
                             <input type="checkbox" name="switch" data-id="{{.ID}}" lay-filter="state" lay-skin="switch"
-                                lay-text="显示|隐藏" checked>
+                                lay-text="显示|隐藏" {{if .IsShow}}checked{{end}}>
                         </td>
                         <td width="160px" class="handle">
-                            <a href="javascript:;"
-                                data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id' => $list[id]),'html')}}"
+                            <a href="javascript:;" data-uri='{{ urlHtmlAttr "/admin/article/edit/" .ID }}'
                                 class="event-form">编辑</a>
                             &nbsp;|&nbsp;
                             <a href="javascript:;" class="event-delete"
-                                data-uri="<{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$list[id]),'html')}}">删除</a>
+                                data-uri='{{ urlHtmlAttr "/admin/article/delete/" .ID }}'>删除</a>
                         </td>
                     </tr>
                     {{end}}

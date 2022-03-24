@@ -18,12 +18,17 @@ func (a Article) Lists(ctx iris.Context) {
 		pageNum   uint
 		pageCount uint
 		offset    uint
-
-		where map[string]interface{}
+		title     string
+		where     = make(map[string]interface{})
 	)
 
 	offset = 0
 	pageCount = 10
+
+	title = ctx.URLParamDefault("keyword", "")
+	if title != "" {
+		where["title like ?"] = title + "%"
+	}
 
 	data, _ := model.Article{}.Page(where, offset, pageCount)
 
@@ -42,6 +47,7 @@ func (a Article) Lists(ctx iris.Context) {
 	ctx.View("admin/article/lists.html")
 }
 
+//表单
 func (a Article) Form(ctx iris.Context) {
 	id := ctx.Params().GetUint64Default("id", 0)
 	data, err := model.Article{}.Get(uint(id))
