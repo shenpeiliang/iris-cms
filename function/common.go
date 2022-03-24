@@ -66,6 +66,11 @@ func RegisterTemplateFun(tmpl *view.HTMLEngine) {
 		return template.HTMLAttr(url + gconv.String(param))
 	})
 
+	//url链接
+	tmpl.AddFunc("htmlspecialchars_decode", func(content string) template.HTML {
+		return template.HTML(content)
+	})
+
 	//时间格式化
 	tmpl.AddFunc("date", func(t uint, format string) (ret string) {
 		if t == 0 {

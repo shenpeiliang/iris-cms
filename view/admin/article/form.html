@@ -1,7 +1,8 @@
-<include file="../Application/Acom/Admin/View/default/header-layer.html"/>
-<script type="text/javascript" src="__STATIC__/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="__STATIC__/ueditor/ueditor.all.min.js"></script>
-<script type="text/javascript" src="__STATIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+{{render "header-layer.html"}}
+
+{{js "/static/util/ueditor/ueditor.config.js" "/static/util/ueditor/ueditor.all.min.js"
+"/static/util/ueditor/lang/zh-cn/zh-cn.js"}}
+
 <script type="text/javascript">
     UE.getEditor("content");
 </script>
@@ -10,65 +11,59 @@
         <div class="right_1">
             <div class="right_1_2">
                 <div class="x-nav">
-                    <include file="../Application/Acom/Admin/View/default/page_tool.html"/>
+                    {{render "page-tool.html"}}
                 </div>
-                <form class="layui-form" action="<{$url_current}>">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">文章标题：</label>
-                            <div class="layui-input-inline layui-input-inline-long">
-                                <input name="title" type="text" maxlength="30" placeholder="请输入文章标题"
-                                       lay-verify="required"
-                                       lay-reqText="请输入文章标题" value="<{$data.title|htmlspecialchars_decode}>" class="layui-input">
-                            </div>
-                        </div>
-
+                <form class="layui-form" action='{{urlpath "/admin/article/form"}}'>
+                    <input type="hidden" name="id" value="{{.data.ID}}" />
                     <div class="layui-form-item">
-                        <label class="layui-form-label">关联小区ID：</label>
-                        <div class="layui-input-inline layui-input-inline-short">
-                            <input name="target_id" type="number" maxlength="30" placeholder="请输入关联小区ID"
-                                   lay-verify="required"
-                                   lay-reqText="请输入关联小区ID" value="<{$data.target_id}>" class="layui-input">
+                        <label class="layui-form-label">文章标题：</label>
+                        <div class="layui-input-inline layui-input-inline-long">
+                            <input name="title" type="text" maxlength="30" placeholder="请输入文章标题" lay-verify="required"
+                                lay-reqText="请输入文章标题" value="{{.data.Title | html}}" class="layui-input">
                         </div>
                     </div>
 
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">主图：</label>
-                            <div class="layui-input-inline">
-                                <button type="button" class="layui-btn J_UploadImgBtn" data-itype="article"
-                                        id="J_TitleImg">
-                                    <i class="layui-icon">&#xe67c;</i>更改图片
-                                </button>
-                                <img onerror="this.onerror=null;this.src='/static/images/default.png'"
-                                     data-img="<if condition='$data[img]'><{$data.img|htmlspecialchars_decode}><else/>/static/images/default.png</if>" class="J_ViewImg upload-img" src="<{$data.img|htmlspecialchars_decode}>">
-                                <input name="img" type="hidden" value="<{$data.img|htmlspecialchars_decode}>">
-                            </div>
-                        </div>
 
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">简介：</label>
-                            <div class="layui-input-inline layui-input-inline-longer">
-                                <p class="de_tips">（选填，如果不填写会默认抓取正文前108个字）</p>
-                                <textarea name="description" placeholder="请输入简介" class="layui-textarea"><{$data.description|htmlspecialchars_decode}></textarea>
-                            </div>
-                        </div>
 
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">内容：</label>
-                            <div class="layui-input-rich">
-                                <script id="content" name="content" type="text/plain" style="width:100%;height:495px;">
-                                    <{$data.content|htmlspecialchars_decode}>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">主图：</label>
+                        <div class="layui-input-inline">
+                            <button type="button" class="layui-btn J_UploadImgBtn" data-itype="article" id="J_TitleImg">
+                                <i class="layui-icon">&#xe67c;</i>更改图片
+                            </button>
+                            <img onerror="this.onerror=null;this.src='/static/images/default.png'"
+                                data-img="{{if .data.Img }}{{.data.Img}} {{else}}/static/images/default.png{{end}}"
+                                class="J_ViewImg upload-img" src="{{.data.Img}}">
+                            <input name="img" type="hidden" value="{{.data.Img}}">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">简介：</label>
+                        <div class="layui-input-inline layui-input-inline-longer">
+                            <p class="de_tips">（选填，如果不填写会默认抓取正文前108个字）</p>
+                            <textarea name="description" placeholder="请输入简介"
+                                class="layui-textarea">{{.data.Description | html}}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">内容：</label>
+                        <div class="layui-input-rich">
+                            <script id="content" name="content" type="text/plain" style="width:100%;height:495px;">
+                                    {{htmlspecialchars_decode .data.Content}}
                                 </script>
-                            </div>
                         </div>
+                    </div>
 
-                        <div class="btn-box">
-                            <button class="layui-btn layui-btn-lg" lay-submit lay-filter="saveBtn">确认保存</button>
-                            <a class="layui-btn layui-btn-primary layui-btn-lg"
-                               href="javascript:parent.layer.closeAll();">关闭窗口</a>
-                        </div>
+                    <div class="btn-box">
+                        <button class="layui-btn layui-btn-lg" lay-submit lay-filter="saveBtn">确认保存</button>
+                        <a class="layui-btn layui-btn-primary layui-btn-lg"
+                            href="javascript:parent.layer.closeAll();">关闭窗口</a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<include file="../Application/Acom/Admin/View/default/footer.html"/>
+{{render "footer.html"}}
