@@ -2,7 +2,9 @@ package admin
 
 import (
 	"cms/util"
+	"fmt"
 	"mime/multipart"
+	"os"
 	"path/filepath"
 	"time"
 
@@ -24,20 +26,33 @@ func (u Uploadify) Upload(ctx iris.Context) {
 
 	imgType := ctx.Params().GetStringDefault("img_type", "default")
 
-	destDirectory := filepath.Join("./upload", imgType)
+	destDirectory := "./" + filepath.Join("static/upload", imgType)
+
+	//目录是否存在
+	_, err := os.Stat(destDirectory)
+	if os.IsNotExist(err) {
+		if e := os.MkdirAll(destDirectory, os.ModePerm); e != nil {
+			fmt.Println(e.Error())
+		}
+
+	}
+
 	ctx.UploadFormFiles(destDirectory, beforeSave)
 
 	util.Response.Success(ctx, "上传成功", iris.Map{
-		"path": filepath.Join(destDirectory, upload.FileName),
+		"path": "/" + filepath.Join(destDirectory, upload.FileName),
 	})
 
 }
 
 func beforeSave(ctx iris.Context, file *multipart.FileHeader) {
 
-	unixTime := time.Now().Unix()
+	//纳秒
+	unixTime := time.Now().UnixNano()
 
-	file.Filename = gconv.String(unixTime) + "-" + file.Filename
+	//file.Header文件类型
+
+	file.Filename = gconv.String(unixTime) + ".jpg"
 
 	upload.FileName = file.Filename
 }

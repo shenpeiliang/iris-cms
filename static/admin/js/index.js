@@ -877,8 +877,8 @@ $(function () {
                     layer.closeAll('loading');
 
                     if (res.code == '200') {
-                        $this.siblings('img').removeClass('hide').attr({ 'src': res.data }).data('img', res.data);
-                        $this.siblings('input[type="hidden"]').val(res.data);
+                        $this.siblings('img').removeClass('hide').attr({ 'src': res.data.path }).data('img', res.data.path);
+                        $this.siblings('input[type="hidden"]').val(res.data.path);
                     } else {
                         layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                     }
