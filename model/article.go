@@ -18,6 +18,28 @@ type Article struct {
 	IsShow      byte `gorm:"column:is_show"`
 }
 
+//保存数据
+func (a Article) Save(data Article) (ret bool, err error) {
+
+	if data.ID > 0 {
+		//更新
+		err = util.DB.Model(Article{}).Where(&Article{
+			ID: data.ID,
+		}).Update(data).Error
+	} else {
+		//新增
+		err = util.DB.Model(Article{}).Save(&data).Error
+	}
+
+	if err != nil {
+		return false, err
+	}
+
+	ret = true
+
+	return
+}
+
 //获取一条记录
 func (a Article) Get(id uint) (Article, error) {
 	var data Article
@@ -72,4 +94,17 @@ func (a Article) Count(where map[string]interface{}) (uint, error) {
 	db.Model(Article{}).Count(&count)
 
 	return count, nil
+}
+
+//删除记录
+func (a Article) Delete(id uint) (ret bool, err error) {
+	err = util.DB.Unscoped().Delete(&Article{
+		ID: id,
+	}).Error
+
+	if err != nil {
+		return
+	}
+
+	return true, nil
 }

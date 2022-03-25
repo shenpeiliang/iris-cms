@@ -7,4 +7,5 @@ import (
 func InitAdmin(party iris.Party) {
 	RegisterUser(party)
 	RegisterArticle(party)
+	RegisterUploadify(party)
 }

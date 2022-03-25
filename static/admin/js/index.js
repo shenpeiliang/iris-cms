@@ -1,10 +1,10 @@
 //只能输入数字
-function is_num_int(obj) {   // 值允许输入数字
+function is_num_int (obj) {   // 值允许输入数字
     obj.value = obj.value.replace(/[^\d]/g, "");     //先把非数字的都替换掉，除了数字
     obj.value = obj.value.replace(/^0{0,}/, "");
 }
 //只能输入数字和一个小数点
-function is_num(obj) {   // 值允许输入一个小数点和数字
+function is_num (obj) {   // 值允许输入一个小数点和数字
     obj.value = obj.value.replace(/[^\d.]/g, "");     //先把非数字的都替换掉，除了数字和.
     obj.value = obj.value.replace(/^\./g, "");         //必须保证第一个为数字而不是.
     obj.value = obj.value.replace(/\.{2,}/g, ".");   //保证只有出现一个.而没有多个.
@@ -63,7 +63,7 @@ $(function () {
         var tel_obj_length = tel_obj.length;
         for (var i = 0; i < tel_obj_length; i++) {
             if ($(tel_obj[i]).val() == '' || !check_tel($(tel_obj[i]).val())) {
-                layer.tips('手机号码格式有误！', $(tel_obj[i]), {tips: [2, '#FF5722']});
+                layer.tips('手机号码格式有误！', $(tel_obj[i]), { tips: [2, '#FF5722'] });
                 tel_obj[i].focus();
                 return false;
             }
@@ -74,7 +74,7 @@ $(function () {
         var obj_length = obj.length;
         for (var i = 0; i < obj_length; i++) {
             if ($(obj[i]).val() == '') {
-                $('html, body').animate({scrollTop: 0}, 'slow');
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
                 if ($(obj[i]).attr('type') == 'hidden') {
                     layer.tips('必填项不能为空', $(obj[i]).parent());
                     return false;
@@ -133,7 +133,7 @@ $(function () {
             arr += ',' + $(this).val();
         });
         if (arr.length > 0) {
-            $.post(email_url, {'arr': arr}, function (data) {
+            $.post(email_url, { 'arr': arr }, function (data) {
                 if (data.status == 1) {
                     window.location.href = data.res;
                 } else {
@@ -167,7 +167,7 @@ $(function () {
             return;
         }
 
-        $.post(pic_del, {'pic_id': pic_id}, function (data) {
+        $.post(pic_del, { 'pic_id': pic_id }, function (data) {
             if (data == 'ok') {
                 parent_li.remove();
             }
@@ -184,17 +184,17 @@ $(function () {
         });
 
         if (ids.length <= 0) {
-            layer.msg('请选择要操作的记录', {icon: 5, time: 2000});
+            layer.msg('请选择要操作的记录', { icon: 5, time: 2000 });
             return;
         }
 
-        $.post(del_url, {'ids': ids}, function (e) {
-            if (e.code == 'success') {
-                layer.msg(e.data, function () {
+        $.post(del_url, { 'ids': ids }, function (e) {
+            if (e.code == '200') {
+                layer.msg(e.msg, function () {
                     window.location.reload()
                 })
             } else {
-                layer.msg(e.data)
+                layer.msg(e.msg)
             }
         }, 'json');
 
@@ -210,15 +210,15 @@ $(function () {
 
         JSON.stringify(json);
         if (json.length <= 0) {
-            layer.msg('请选择要操作的记录', {icon: 5, time: 2000});
+            layer.msg('请选择要操作的记录', { icon: 5, time: 2000 });
             return;
         }
 
-        $.post(order_url, {'arr': json}, function (res) {
-            if (res.code == 'success') {
+        $.post(order_url, { 'arr': json }, function (res) {
+            if (res.code == '200') {
                 location.reload();
             } else {
-                layer.msg(res.data, {icon: 5});
+                layer.msg(res.msg, { icon: 5 });
             }
         }, 'json');
 
@@ -226,7 +226,7 @@ $(function () {
     //验证管理员
     $("#admin_name").blur(function () {
         var user_name = $(this).val();
-        $.post(validate_url, {'user_name': user_name}, function (data) {
+        $.post(validate_url, { 'user_name': user_name }, function (data) {
             if (data.length > 0) {
                 $('#error').text(data);
             }
@@ -235,13 +235,13 @@ $(function () {
     });
     //修改权限
     $(".auth_group").on('change', (function () {
-            var group_id = $(this).val();
-            $.post(validate_url, {'group_id': group_id}, function (data) {
-                if (data.length > 0) {
-                    layer.msg(data);
-                }
-            })
+        var group_id = $(this).val();
+        $.post(validate_url, { 'group_id': group_id }, function (data) {
+            if (data.length > 0) {
+                layer.msg(data);
+            }
         })
+    })
     );
     //分类删除
     $('.del_family').on('click', function () {
@@ -276,7 +276,7 @@ $(function () {
             }
             var uri = catid_url;
             var str = "<option value=''>请选择栏目</option>";
-            $.post(uri, {'model': model}, function (data) {
+            $.post(uri, { 'model': model }, function (data) {
                 if (data.length > 0) {
                     for (var i = 0; i < data.length; i++) {
                         str += "<option value='s_" + data[i].id + "'>" + data[i].title + "</option>";
@@ -299,13 +299,13 @@ $(function () {
     $('.member_remark').on('click', function () {
         var openid = $(this).attr('openid');
         var obj = $(this).parent('.handle').siblings('.txt_remark');
-        layer.prompt({title: '微信用户备注信息', formType: 0}, function (text, index) {
+        layer.prompt({ title: '微信用户备注信息', formType: 0 }, function (text, index) {
             //layer.msg('您最后写下了：'+ text);
-            $.post(remark_uri, {'openid': openid, 'remark': text}, function (data) {
+            $.post(remark_uri, { 'openid': openid, 'remark': text }, function (data) {
                 if (data.length > 0) {
                     obj.html(text);
                     layer.close(index);
-                    layer.msg(data, {icon: 1, time: 3000, title: '系统信息'});
+                    layer.msg(data, { icon: 1, time: 3000, title: '系统信息' });
                 }
             });
         });
@@ -316,7 +316,7 @@ $(function () {
         var uri = $(this).attr('uri');
         var load_index = layer.load(2);
         $.get(uri, function (data) {
-            if (data == 'success') {
+            if (data == '200') {
                 layer.close(load_index);
                 window.location.reload();
             }
@@ -327,9 +327,9 @@ $(function () {
         var uri = $(this).attr('uri');
         var load_index = layer.load(2);
         $.get(uri, function (data) {
-            if (data == 'success') {
+            if (data == '200') {
                 layer.close(load_index);
-                layer.msg('数据库还原成功！', {time: 5000, icon: 6});
+                layer.msg('数据库还原成功！', { time: 5000, icon: 6 });
             }
         });
     });
@@ -382,7 +382,7 @@ $(function () {
                 $('#set_sortid select:eq(1)').remove();
                 return false;
             }
-            $.post(sort_uri, {'parentid': parentid}, function (data) {
+            $.post(sort_uri, { 'parentid': parentid }, function (data) {
                 if (data.length > 0) {
                     for (var i = 0; i < data.length; i++) {
                         str += "<option value='" + data[i].id + "'>" + data[i].title + "</option>";
@@ -404,7 +404,7 @@ $(function () {
             var c = "";
             var sort_id = $(this).find("option:selected").val();
             var str = "<select name='sortid_1' class='validate'>";
-            $.post(sort_active_uri, {'parentid': sort_id}, function (data) {
+            $.post(sort_active_uri, { 'parentid': sort_id }, function (data) {
                 if (data.length > 0) {
                     for (var i = 0; i < data.length; i++) {
                         str += "<option value='" + data[i][1] + "'>" + data[i][0] + "</option>";
@@ -468,8 +468,8 @@ $(function () {
         $('#spec_set').append(str);
     });
     //是否为空
-    function check_empty(obj) {
-        if (typeof(obj) == "undefined" || obj <= 0) {
+    function check_empty (obj) {
+        if (typeof (obj) == "undefined" || obj <= 0) {
             return true;
         } else {
             return false;
@@ -478,21 +478,21 @@ $(function () {
 
     //工匠信息
     $("#worker_uname_txt").on('keyup', (function () {
-            var uname = $(this).val();
-            if (uname.length == 0) {
-                return;
-            }
-            var str = '';
-            $.post(worker_url, {'uname': uname}, function (data) {
-                if (data.length > 0) {
-                    for (var i = 0; i < data.length; i++) {
-                        str += '<li><a href="javascript:void(0);" uid=' + data[i].id + ' class="worker_info">' + data[i].title + '</a></li>';
-                    }
-                    $('#worker_lists ul').html(str);
-                    $('#worker_lists').show();
+        var uname = $(this).val();
+        if (uname.length == 0) {
+            return;
+        }
+        var str = '';
+        $.post(worker_url, { 'uname': uname }, function (data) {
+            if (data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    str += '<li><a href="javascript:void(0);" uid=' + data[i].id + ' class="worker_info">' + data[i].title + '</a></li>';
                 }
-            }, 'json');
-        })
+                $('#worker_lists ul').html(str);
+                $('#worker_lists').show();
+            }
+        }, 'json');
+    })
     );
     $("#worker_lists_show").on('click', '.worker_info', function () {
         $('#worker_uname_txt').val($(this).text());
@@ -513,51 +513,6 @@ $(function () {
         //$('#city_to_con').toggle();
     });
 
-    //审核
-    $('.pass-report').on('click', function () {
-        var pass_uri = $(this).attr('data-uri');
-
-        layer.open({
-                title: '请确认工匠ID进行确认',
-                type: 1,
-                content: $('#form-report-pass'),
-                btn: ['确认', '检查'],
-                yes: function (index) {
-                    var res = '';
-                    var w_id = $('#form-report-pass').find('input:first').val();
-                    if (w_id > 0) {
-                        $.post(pass_uri, {'wid': w_id}, function (e) {
-                            if (e.code == 'SUCCESS') {
-                                layer.msg(e.data, function () {
-                                    layer.close(index);
-                                    location.reload();
-                                });
-                            } else {
-                                layer.msg('操作失败!', function () {
-                                    layer.close(index);
-                                });
-                            }
-                        }, 'json');
-                    }
-                },
-                btn2: function (index) {
-                    var w_id = $('#form-report-pass').find('input:first').val();
-                    if (w_id > 0) {
-                        $.post(uri_check_worker, {'wid': w_id}, function (e) {
-                            if (e.code == 'SUCCESS') {
-                                $('#form-report-pass').find('p:first').html(e.data);
-                            } else {
-                                $('#form-report-pass').find('p:first').html('暂未查到!');
-                            }
-                        }, 'json');
-                    }
-                    return false;
-                }
-            }
-        );
-
-    });
-
     //表单提交
     $('#form-submit').click(function () {
         //必填
@@ -565,7 +520,7 @@ $(function () {
         var obj_length = obj.length;
         for (var i = 0; i < obj_length; i++) {
             if ($(obj[i]).val() == '') {
-                $('html, body').animate({scrollTop: 0}, 'slow');
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
                 if ($(obj[i]).attr('type') == 'hidden') {
                     layer.tips('必填项不能为空', $(obj[i]).parent());
                     return false;
@@ -580,15 +535,15 @@ $(function () {
         var url = $("form").attr('action')
 
         $.post(url, data, function (res) {
-            if (res.code == 'success')
-                return layer.msg(res.data, function () {
-                    if (res.url.length)
-                        return window.location.href = res.url
+            if (res.code == '200')
+                return layer.msg(res.msg, function () {
+                    if (res.data.url)
+                        return window.location.href = res.data.url
                     else
                         return window.location.reload()
                 })
             else
-                return layer.msg(res.data)
+                return layer.msg(res.msg)
         }, 'json')
     })
 
@@ -612,7 +567,7 @@ $(function () {
                 var obj_length = obj.length;
                 for (var i = 0; i < obj_length; i++) {
                     if ($(obj[i]).val() == '') {
-                        $('html, body').animate({scrollTop: 0}, 'slow');
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
                         if ($(obj[i]).attr('type') == 'hidden') {
                             layer.tips('必填项不能为空', $(obj[i]).parent());
                             return false;
@@ -627,13 +582,13 @@ $(function () {
                 var url = $(ifram_body).find("form").attr('action')
 
                 $.post(url, data, function (res) {
-                    if (res.code == 'success')
-                        return layer.msg(res.data, function () {
+                    if (res.code == '200')
+                        return layer.msg(res.msg, function () {
                             layer.close(index)
                             return window.location.reload()
                         })
                     else
-                        return layer.msg(res.data)
+                        return layer.msg(res.msg)
                 }, 'json')
             },
             btn2: function (index) {
@@ -681,10 +636,10 @@ $(function () {
                     return '上限为25位字符';
                 }
             },
-            rich_edit: function(value){
+            rich_edit: function (value) {
                 //富文本
-                if($("textarea[data-layedit_index]").length > 0){
-                    $("textarea[data-layedit_index]").each(function(i){
+                if ($("textarea[data-layedit_index]").length > 0) {
+                    $("textarea[data-layedit_index]").each(function (i) {
                         layedit.sync($("textarea[data-layedit_index]").eq(i).attr('data-layedit_index'));
                     });
                 }
@@ -697,7 +652,7 @@ $(function () {
             type: 'datetime',
             done: function (value) {
                 if (new Date($('#end').val()) < new Date(value)) {
-                    layer.msg('开始时间不能晚于结束时间', {icon: 5, time: 2000});
+                    layer.msg('开始时间不能晚于结束时间', { icon: 5, time: 2000 });
                     $('#start').val('');
                 }
             }
@@ -712,7 +667,7 @@ $(function () {
             type: 'datetime',
             done: function (value) {
                 if (new Date($('#start').val()) > new Date(value)) {
-                    layer.msg('结束时间不能早于开始时间', {icon: 5, time: 2000});
+                    layer.msg('结束时间不能早于开始时间', { icon: 5, time: 2000 });
                     $('#end').val('');
                 }
             }
@@ -720,13 +675,13 @@ $(function () {
 
 
         //页面加载完成后重新渲染
-        $(document).ready(function(){
+        $(document).ready(function () {
             layui.form.render();
         });
 
 
         //点评等级
-        form.on('radio(grade-select)', function(data){
+        form.on('radio(grade-select)', function (data) {
             grade = data.value;
             tag_type = (grade == 1 || grade == 2) ? 'bad' : 'good';
             var tag_select = 'remark-tag-option-' + tag_type;
@@ -773,14 +728,14 @@ $(function () {
 
         //帖子类型选择
         form.on('radio(post_type_even)', function (data) {
-            $('.post-section-main').removeClass('section-show').eq($(this).val()-1).addClass('section-show');
+            $('.post-section-main').removeClass('section-show').eq($(this).val() - 1).addClass('section-show');
         });
 
         //标签显示
         form.on('radio(is_multicast_event)', function (data) {
-            if(data.value == 1){
+            if (data.value == 1) {
                 $('.section-tags').removeClass('hide')
-            }else{
+            } else {
                 $('.section-tags').addClass('hide')
             }
         });
@@ -797,7 +752,7 @@ $(function () {
             var parentid = data.value;
             var uri = linkage_url;
             var str = "<option value=''>请选择城市</option>";
-            $.post(uri, {'parentid': parentid}, function (ret) {
+            $.post(uri, { 'parentid': parentid }, function (ret) {
                 if (ret.length > 0) {
                     for (var i = 0; i < ret.length; i++) {
                         str += "<option value='" + ret[i].id + "'>" + ret[i].name + "</option>";
@@ -813,7 +768,7 @@ $(function () {
             var parentid = data.value;
             var uri = linkage_url;
             var str = "<option value=''>请选择区/县</option>";
-            $.post(uri, {'parentid': parentid}, function (ret) {
+            $.post(uri, { 'parentid': parentid }, function (ret) {
                 if (ret.length > 0) {
                     for (var i = 0; i < ret.length; i++) {
                         str += "<option value='" + ret[i].id + "'>" + ret[i].name + "</option>";
@@ -824,7 +779,7 @@ $(function () {
             }, 'json');
 
             //地区
-            if($('#village').length){
+            if ($('#village').length) {
                 village(parentid, $('#county').find("option:selected").val());
             }
         });
@@ -834,14 +789,14 @@ $(function () {
             var parentid = data.value;
 
             //地区
-            if($('#village').length){
+            if ($('#village').length) {
                 village($('#city').find("option:selected").val(), parentid);
             }
         });
 
         //小区
-        var village = function(city, county) {
-            var city = city || 0 ;
+        var village = function (city, county) {
+            var city = city || 0;
             var county = county || 0;
 
             var uri = "/tool/main/get_village.html";
@@ -890,13 +845,13 @@ $(function () {
                 type: 'post',
                 data: data.field
             }).done(function (res) {
-                if (res.code != 'success') {
-                    layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                if (res.code != '200') {
+                    layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                     return;
                 }
 
-                layer.msg(res.data || "操作成功", {icon: 6, time: 1000}, function () {
-                    if(window != top){
+                layer.msg(res.msg || "操作成功", { icon: 6, time: 1000 }, function () {
+                    if (window != top) {
                         top.location.reload();
                         return;
                     }
@@ -921,16 +876,16 @@ $(function () {
                 done: function (res) {
                     layer.closeAll('loading');
 
-                    if (res.code == 'success') {
-                        $this.siblings('img').removeClass('hide').attr({'src': res.data}).data('img', res.data);
+                    if (res.code == '200') {
+                        $this.siblings('img').removeClass('hide').attr({ 'src': res.data }).data('img', res.data);
                         $this.siblings('input[type="hidden"]').val(res.data);
                     } else {
-                        layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                        layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                     }
                 },
                 error: function () {
                     layer.closeAll('loading');
-                    layer.msg('网络错误', {icon: 5, time: 2000});
+                    layer.msg('网络错误', { icon: 5, time: 2000 });
                 }
             });
         });
@@ -951,7 +906,7 @@ $(function () {
                 done: function (res) {
                     layer.closeAll('loading');
                     var _img = '';
-                    if (res.code == 'success') {
+                    if (res.code == '200') {
                         _img += '' +
                             '<span class="J_ImgItem">' +
                             '   <input type="hidden" name="images[]" value="' + res.data + '"/>' +
@@ -961,12 +916,12 @@ $(function () {
                         $('#J_Pzbox').append(_img);
 
                     } else {
-                        layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                        layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                     }
                 },
                 error: function () {
                     layer.closeAll('loading');
-                    layer.msg('网络错误', {icon: 5, time: 2000});
+                    layer.msg('网络错误', { icon: 5, time: 2000 });
                 }
             });
         });
@@ -974,11 +929,11 @@ $(function () {
         //删除操作
         $('.event-delete').click(function () {
             $.get($(this).attr('data-uri'), function (e) {
-                if (e.code != 'success') {
-                    layer.msg(e.data);
+                if (e.code != '200') {
+                    layer.msg(e.msg);
                     return;
                 }
-                layer.msg(e.data, {time: 2000}, function () {
+                layer.msg(e.msg, { time: 2000 }, function () {
                     location.reload()
                 })
             }, 'json')
@@ -1003,7 +958,7 @@ $(function () {
         });
 
         //排序
-        function getUrlParam(url, name) {
+        function getUrlParam (url, name) {
             var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
             var len = url.indexOf('?') + 1;
             var query = url.substring(len);
@@ -1053,100 +1008,24 @@ $(function () {
             });
 
             if (ids.length <= 0) {
-                layer.msg('请选择要操作的记录', {icon: 5, time: 2000});
+                layer.msg('请选择要操作的记录', { icon: 5, time: 2000 });
                 return;
             }
 
             layer.confirm('确定要删除吗？', function () {
                 admin.ajax({
                     url: uri,
-                    data: {ids: ids},
+                    data: { ids: ids },
                     type: 'post'
                 }).done(function (res) {
                     if (res.code != 'ok') {
-                        layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                        layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                         return;
                     }
-                    layer.msg(res.data || "操作成功", {icon: 6, time: 2000}, function () {
+                    layer.msg(res.msg || "操作成功", { icon: 6, time: 2000 }, function () {
                         location.reload();
                     });
                 });
-            });
-        });
-
-        //品牌表单
-        $('.car-brand-form').on('click', function () {
-            var uri = $(this).data('uri');
-            var title = $(this).data('title') || '';
-            var img = $(this).data('img') || '';
-
-            var _img = '';
-            if (img) {
-                _img = '<span class="J_ImgItem">' +
-                    '   <input type="hidden" name="img" value="' + img + '"/>' +
-                    '   <a href="javascript:;" class="J_ViewImg" data-img="' + img + '">图片</a>' +
-                    '   <a href="javascript:;" data-img="' + img + '" class="layui-icon layui-icon-close del J_Del"></a>' +
-                    '</span>';
-            }
-
-            layer.open({
-                title: '表单信息',
-                area: ['420px', '240px'],
-                type: 1,
-                content: '' +
-                '<form class="dialog-form" action="" id="J_Form">\n' +
-                '    <div class="dialog-form-item">\n' +
-                '        <label class="dialog-form-label">名称</label>\n' +
-                '        <div class="dialog-form-input">\n' +
-                '            <input type="text" id="J_Title" name="title" placeholder="请输入名称" maxlength="10" autocomplete="off" value="' + title + '">\n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '    <div class="dialog-form-item">\n' +
-                '        <label class="dialog-form-label">主图</label>\n' +
-                '        <div class="dialog-form-input">\n' +
-                '            <button type="button" class="layui-btn" id="J_Upload"><i class="layui-icon">&#xe67c;</i>选择图片</button>\n' +
-                '        </div>\n' +
-                '    </div>' +
-                '    <div class="dialog-form-item-pz" id="J_Pzbox" data-itype="car_brand">' + _img + '</div>' +
-                '    <div class="dialog-form-item">\n' +
-                '        <label class="dialog-form-label">&nbsp;</label>\n' +
-                '        <div class="dialog-form-input">\n' +
-                '            <a href="javascript:;" id="J_Btn" class="dialog-form-btn">确定</a>\n' +
-                '            <a href="javascript:layer.closeAll();" class="dialog-form-hollowbtn">取消</a>\n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '</form>',
-                success: function () {
-                    //弹窗初始化方法
-                    dialogFn();
-
-                    if (img) {
-                        $('#J_Upload').prop('disabled', true);
-                    }
-
-                    $('#J_Btn').on('click', function () {
-
-                        var title = $.trim($('#J_Title').val());
-                        if (!title) {
-                            layer.msg('请输入名称', {icon: 5, time: 2000});
-                            return;
-                        }
-
-                        admin.ajax({
-                            url: uri,
-                            type: 'post',
-                            data: $('#J_Form').serialize(),
-                        }).done(function (res) {
-                            if (res.code != 'success') {
-                                layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
-                                return;
-                            }
-                            layer.alert("保存成功", {icon: 6}, function () {
-                                location.reload();
-                            });
-                        });
-                    });
-                }
             });
         });
 
@@ -1161,68 +1040,13 @@ $(function () {
                 type: 'post'
             }).done(function (res) {
                 if (res.success) {
-                    callback(res.data);
+                    callback(res.msg);
                 } else {
-                    layer.msg(res.data || '获取数据失败', {icon: 5, time: 2000});
+                    layer.msg(res.msg || '获取数据失败', { icon: 5, time: 2000 });
                 }
             });
         };
 
-        //车系表单
-        $('.car-series-form').on('click', function () {
-            var uri = $(this).data('uri');
-            var title = $(this).data('title') || '';
-            var pid = $(this).data('pid') || 0;
-
-            layer.open({
-                title: '表单信息',
-                area: ['420px', '240px'],
-                type: 1,
-                content: '' +
-                '<form class="dialog-form" action="" id="J_Form">\n' +
-                '    <div class="dialog-form-item">\n' +
-                '        <label class="dialog-form-label">名称</label>\n' +
-                '        <div class="dialog-form-input">\n' +
-                '            <input type="text" id="J_Title" name="title" placeholder="请输入名称" maxlength="10" autocomplete="off" value="' + title + '">\n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '    <div class="dialog-form-item">\n' +
-                '        <label class="dialog-form-label">&nbsp;</label>\n' +
-                '        <div class="dialog-form-input">\n' +
-                '            <a href="javascript:;" id="J_Btn" class="dialog-form-btn">确定</a>\n' +
-                '            <a href="javascript:layer.closeAll();" class="dialog-form-hollowbtn">取消</a>\n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '</form>',
-                success: function () {
-                    $('#J_Btn').on('click', function () {
-
-                        var title = $.trim($('#J_Title').val());
-                        if (!title) {
-                            layer.msg('请输入名称', {icon: 5, time: 2000});
-                            return;
-                        }
-
-                        admin.ajax({
-                            url: uri,
-                            type: 'post',
-                            data: {
-                                pid: pid,
-                                title: $('#J_Title').val()
-                            },
-                        }).done(function (res) {
-                            if (res.code != 'success') {
-                                layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
-                                return;
-                            }
-                            layer.alert("保存成功", {icon: 6}, function () {
-                                location.reload();
-                            });
-                        });
-                    });
-                }
-            });
-        });
 
         $('.post-relation-form').on('click', function () {
             var uri = $(this).data('uri');
@@ -1244,7 +1068,7 @@ $(function () {
                     '        <label class="dialog-form-label">用户ID</label>\n' +
                     '        <div class="dialog-form-input">\n' +
                     '            <input type="text" id="J_Title" name="ids" placeholder="请输入用户ID" maxlength="10" autocomplete="off" value="">\n' +
-                    '            <p style="color:#999">多个用户ID使用英文逗号隔开</p>'+
+                    '            <p style="color:#999">多个用户ID使用英文逗号隔开</p>' +
                     '        </div>\n' +
                     '    </div>\n' +
                     '    <div class="dialog-form-item">\n' +
@@ -1257,10 +1081,10 @@ $(function () {
                     '</form>',
                 success: function () {
                     form.render('radio');
-                    form.on('radio(rtype_even)', function(data){
-                        if(data.value == 1){
+                    form.on('radio(rtype_even)', function (data) {
+                        if (data.value == 1) {
                             $('#form-ids').hide();
-                        }else{
+                        } else {
                             $('#form-ids').show();
                         }
                     });
@@ -1270,7 +1094,7 @@ $(function () {
                         var stype = $("input[name='r_type']:checked").val();
                         console.log(stype)
                         if (stype == 0 && !title) {
-                            layer.msg('请输入用户ID', {icon: 5, time: 2000});
+                            layer.msg('请输入用户ID', { icon: 5, time: 2000 });
                             return;
                         }
 
@@ -1282,11 +1106,11 @@ $(function () {
                                 ids: $('#J_Title').val()
                             },
                         }).done(function (res) {
-                            if (res.code != 'success') {
-                                layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                            if (res.code != '200') {
+                                layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                                 return;
                             }
-                            layer.alert("保存成功", {icon: 6}, function () {
+                            layer.alert("保存成功", { icon: 6 }, function () {
                                 layer.closeAll();
                             });
                         });
@@ -1316,7 +1140,7 @@ $(function () {
                     '        <label class="dialog-form-label">店铺ID</label>\n' +
                     '        <div class="dialog-form-input">\n' +
                     '            <input type="text" id="J_Title" name="ids" placeholder="请输入店铺ID" maxlength="10" autocomplete="off" value="">\n' +
-                    '            <p style="color:#999">多个店铺ID使用英文逗号隔开</p>'+
+                    '            <p style="color:#999">多个店铺ID使用英文逗号隔开</p>' +
                     '        </div>\n' +
                     '    </div>\n' +
                     '    <div class="dialog-form-item">\n' +
@@ -1329,10 +1153,10 @@ $(function () {
                     '</form>',
                 success: function () {
                     form.render('radio');
-                    form.on('radio(rtype_even)', function(data){
-                        if(data.value == 1){
+                    form.on('radio(rtype_even)', function (data) {
+                        if (data.value == 1) {
                             $('#form-ids').hide();
-                        }else{
+                        } else {
                             $('#form-ids').show();
                         }
                     });
@@ -1342,7 +1166,7 @@ $(function () {
                         var stype = $("input[name='r_type']:checked").val();
                         console.log(stype)
                         if (stype == 0 && !title) {
-                            layer.msg('请输入店铺ID', {icon: 5, time: 2000});
+                            layer.msg('请输入店铺ID', { icon: 5, time: 2000 });
                             return;
                         }
 
@@ -1354,11 +1178,11 @@ $(function () {
                                 ids: $('#J_Title').val()
                             },
                         }).done(function (res) {
-                            if (res.code != 'success') {
-                                layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                            if (res.code != '200') {
+                                layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                                 return;
                             }
-                            layer.alert("保存成功", {icon: 6}, function () {
+                            layer.alert("保存成功", { icon: 6 }, function () {
                                 layer.closeAll();
                             });
                         });
@@ -1376,9 +1200,9 @@ $(function () {
 
         //活动类型选择
         form.on('radio(activity_type)', function (data) {
-            if(data.value == 1){
+            if (data.value == 1) {
                 $('.activity-packege-content').removeClass('hide')
-            }else{
+            } else {
                 $('.activity-packege-content').addClass('hide')
             }
         });
@@ -1398,11 +1222,11 @@ $(function () {
                     },
                     type: 'post'
                 }).done(function (res) {
-                    if (res.code != 'success') {
-                        layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                    if (res.code != '200') {
+                        layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                         return;
                     }
-                    layer.msg(res.data || "操作成功", {icon: 6, time: 2000}, function () {
+                    layer.msg(res.msg || "操作成功", { icon: 6, time: 2000 }, function () {
                         location.reload();
                     });
                 });
@@ -1425,13 +1249,13 @@ $(function () {
                     is_show: this.checked ? 1 : 0
                 }
             }).done(function (res) {
-                if (res.code != 'success') {
-                    layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                if (res.code != '200') {
+                    layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                     data.elem.checked = !val;
                     form.render();
                     return;
                 }
-                layer.msg("保存成功", {icon: 6, time: 1000});
+                layer.msg("保存成功", { icon: 6, time: 1000 });
             });
         });
 
@@ -1446,13 +1270,13 @@ $(function () {
                     is_auth: this.checked ? 1 : 0
                 }
             }).done(function (res) {
-                if (res.code != 'success') {
-                    layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                if (res.code != '200') {
+                    layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                     data.elem.checked = !val;
                     form.render();
                     return;
                 }
-                layer.msg("保存成功", {icon: 6, time: 1000});
+                layer.msg("保存成功", { icon: 6, time: 1000 });
             });
         });
 
@@ -1467,11 +1291,11 @@ $(function () {
                     is_recommend: this.checked ? 1 : 0
                 }
             }).done(function (res) {
-                if (res.code != 'success') {
-                    layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                if (res.code != '200') {
+                    layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                     return;
                 }
-                layer.msg("保存成功", {icon: 6, time: 1000});
+                layer.msg("保存成功", { icon: 6, time: 1000 });
             });
         });
 
@@ -1498,7 +1322,7 @@ $(function () {
         });
 
         //商品基准价格
-        $('#price-config .goods-btn-add').click(function(){
+        $('#price-config .goods-btn-add').click(function () {
             var _html = '<div class="layui-col-xs12 price-section-item">' +
                 '<span class="layui-form-mid layui-word-aux">大于等于</span>' +
                 '<div class="layui-input-inline layui-input-short">' +
@@ -1522,7 +1346,7 @@ $(function () {
             $(this).parents('#price-config').find('.price-section').append(_html);
         });
 
-        $('#price-config').on('click', '.goods-btn-delete', function(){
+        $('#price-config').on('click', '.goods-btn-delete', function () {
             $(this).parents('.price-section-item').remove();
         });
 
@@ -1537,39 +1361,39 @@ $(function () {
                 area: ['520px', '240px'],
                 type: 1,
                 content: '' +
-                '<form class="layui-form dialog-form" action="" id="J_Form">\n' +
+                    '<form class="layui-form dialog-form" action="" id="J_Form">\n' +
                     '    <div class="dialog-form-ite" id="form-store_id" style="width: 100%;height:40px;">\n' +
                     '        <label class="dialog-form-label">店铺编号</label>\n' +
                     '        <div class="dialog-form-input">\n' +
-                    '            <input type="text" id="J_store_id" name="sid" placeholder="请输入店铺编号" style="width: 96px;" autocomplete="off" value="'+sid+'">\n' +
+                    '            <input type="text" id="J_store_id" name="sid" placeholder="请输入店铺编号" style="width: 96px;" autocomplete="off" value="' + sid + '">\n' +
                     '        </div>\n' +
                     '    </div>\n' +
-                '    <div class="dialog-form-ite" id="form-ids">\n' +
-                '        <label class="dialog-form-label">活动链接</label>\n' +
-                '        <div class="dialog-form-input">\n' +
-                '            <input type="text" id="J_Title" name="url" placeholder="请输入活动链接" style="width: 360px;" autocomplete="off" value="'+src_url+'">\n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '    <div class="dialog-form-item">\n' +
-                '        <label class="dialog-form-label">&nbsp;</label>\n' +
-                '        <div class="dialog-form-input">\n' +
-                '            <a href="javascript:;" id="J_Btn" class="dialog-form-btn">确定</a>\n' +
-                '            <a href="javascript:layer.closeAll();" class="dialog-form-hollowbtn">取消</a>\n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '</form>',
+                    '    <div class="dialog-form-ite" id="form-ids">\n' +
+                    '        <label class="dialog-form-label">活动链接</label>\n' +
+                    '        <div class="dialog-form-input">\n' +
+                    '            <input type="text" id="J_Title" name="url" placeholder="请输入活动链接" style="width: 360px;" autocomplete="off" value="' + src_url + '">\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '    <div class="dialog-form-item">\n' +
+                    '        <label class="dialog-form-label">&nbsp;</label>\n' +
+                    '        <div class="dialog-form-input">\n' +
+                    '            <a href="javascript:;" id="J_Btn" class="dialog-form-btn">确定</a>\n' +
+                    '            <a href="javascript:layer.closeAll();" class="dialog-form-hollowbtn">取消</a>\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '</form>',
                 success: function () {
                     $('#J_Btn').on('click', function () {
 
                         var title = $.trim($('#J_Title').val());
                         if (!title) {
-                            layer.msg('请输入活动链接', {icon: 5, time: 2000});
+                            layer.msg('请输入活动链接', { icon: 5, time: 2000 });
                             return;
                         }
 
                         var store_id = $.trim($('#J_store_id').val());
                         if (!store_id) {
-                            layer.msg('请输入店铺编号', {icon: 5, time: 2000});
+                            layer.msg('请输入店铺编号', { icon: 5, time: 2000 });
                             return;
                         }
 
@@ -1581,11 +1405,11 @@ $(function () {
                                 store_id: $('#J_store_id').val()
                             },
                         }).done(function (res) {
-                            if (res.code != 'success') {
-                                layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                            if (res.code != '200') {
+                                layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                                 return;
                             }
-                            layer.alert("保存成功", {icon: 6}, function () {
+                            layer.alert("保存成功", { icon: 6 }, function () {
                                 layer.closeAll();
                             });
                         });
@@ -1603,41 +1427,41 @@ $(function () {
                 area: ['490px', '330px'],
                 type: 1,
                 content: '' +
-                '<form class="layui-form dialog-form" action="" id="J_Form">\n' +
-                '  <div class="dialog-form-item">' +
-                '                        <label class="dialog-form-label">关联类型</label>' +
-                '                        <div class="dialog-form-input">' +
-                '                            <input type="radio" lay-filter="rtype_even" name="r_type" value="0" checked title="指定小区" />' +
-                '                            <input type="radio" lay-filter="rtype_even" name="r_type" value="1" title="全部小区" />' +
-                '                        </div>' +
-                '                    </div>' +
-                '    <div class="dialog-form-item" id="form-ids">' +
-                '        <label class="dialog-form-label">小区ID</label>' +
-                '        <div class="dialog-form-input">' +
-                '            <input type="text" id="J_Title" name="ids" placeholder="请输入小区ID" maxlength="10" autocomplete="off" value="">' +
-                '            <p style="color:#999">多个小区ID使用英文逗号隔开</p>'+
-                '        </div>' +
-                '    </div>' +
-                '    <div class="dialog-form-item">' +
-                '        <label class="dialog-form-label">备注</label>' +
-                '        <div class="dialog-form-input">' +
-                '            <textarea name="remark" placeholder="请输入备注"></textarea>' +
-                '        </div>' +
-                '    </div>' +
-                '    <div class="dialog-form-item">' +
-                '        <label class="dialog-form-label">&nbsp;</label>' +
-                '        <div class="dialog-form-input">' +
-                '            <a href="javascript:;" id="J_Btn" class="dialog-form-btn">确定</a>' +
-                '            <a href="javascript:layer.closeAll();" class="dialog-form-hollowbtn">取消</a>' +
-                '        </div>' +
-                '    </div>' +
-                '</form>',
+                    '<form class="layui-form dialog-form" action="" id="J_Form">\n' +
+                    '  <div class="dialog-form-item">' +
+                    '                        <label class="dialog-form-label">关联类型</label>' +
+                    '                        <div class="dialog-form-input">' +
+                    '                            <input type="radio" lay-filter="rtype_even" name="r_type" value="0" checked title="指定小区" />' +
+                    '                            <input type="radio" lay-filter="rtype_even" name="r_type" value="1" title="全部小区" />' +
+                    '                        </div>' +
+                    '                    </div>' +
+                    '    <div class="dialog-form-item" id="form-ids">' +
+                    '        <label class="dialog-form-label">小区ID</label>' +
+                    '        <div class="dialog-form-input">' +
+                    '            <input type="text" id="J_Title" name="ids" placeholder="请输入小区ID" maxlength="10" autocomplete="off" value="">' +
+                    '            <p style="color:#999">多个小区ID使用英文逗号隔开</p>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '    <div class="dialog-form-item">' +
+                    '        <label class="dialog-form-label">备注</label>' +
+                    '        <div class="dialog-form-input">' +
+                    '            <textarea name="remark" placeholder="请输入备注"></textarea>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '    <div class="dialog-form-item">' +
+                    '        <label class="dialog-form-label">&nbsp;</label>' +
+                    '        <div class="dialog-form-input">' +
+                    '            <a href="javascript:;" id="J_Btn" class="dialog-form-btn">确定</a>' +
+                    '            <a href="javascript:layer.closeAll();" class="dialog-form-hollowbtn">取消</a>' +
+                    '        </div>' +
+                    '    </div>' +
+                    '</form>',
                 success: function () {
                     form.render('radio');
-                    form.on('radio(rtype_even)', function(data){
-                        if(data.value == 1){
+                    form.on('radio(rtype_even)', function (data) {
+                        if (data.value == 1) {
                             $('#form-ids').hide();
-                        }else{
+                        } else {
                             $('#form-ids').show();
                         }
                     });
@@ -1647,7 +1471,7 @@ $(function () {
                         var stype = $("input[name='r_type']:checked").val();
                         console.log(stype)
                         if (stype == 0 && !title) {
-                            layer.msg('请输入小区ID', {icon: 5, time: 2000});
+                            layer.msg('请输入小区ID', { icon: 5, time: 2000 });
                             return;
                         }
 
@@ -1660,11 +1484,11 @@ $(function () {
                                 remark: $('textarea[name=remark]').val()
                             },
                         }).done(function (res) {
-                            if (res.code != 'success') {
-                                layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                            if (res.code != '200') {
+                                layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                                 return;
                             }
-                            layer.alert("保存成功", {icon: 6}, function () {
+                            layer.alert("保存成功", { icon: 6 }, function () {
                                 layer.closeAll();
                             });
                         });
@@ -1683,27 +1507,27 @@ $(function () {
                 area: ['520px', '240px'],
                 type: 1,
                 content: '' +
-                '<form class="layui-form dialog-form" action="" id="J_Form">\n' +
-                '    <div class="dialog-form-ite" id="form-store_id" style="width: 100%;height:40px;">\n' +
-                '        <label class="dialog-form-label">标签名称</label>\n' +
-                '        <div class="dialog-form-input">\n' +
-                '            <input type="text" id="J_Title" name="title" placeholder="请输入标签名称" style="width: 250px;" autocomplete="off" value="'+title+'">\n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '    <div class="dialog-form-item">\n' +
-                '        <label class="dialog-form-label">&nbsp;</label>\n' +
-                '        <div class="dialog-form-input">\n' +
-                '            <a href="javascript:;" id="J_Btn" class="dialog-form-btn">确定</a>\n' +
-                '            <a href="javascript:layer.closeAll();" class="dialog-form-hollowbtn">取消</a>\n' +
-                '        </div>\n' +
-                '    </div>\n' +
-                '</form>',
+                    '<form class="layui-form dialog-form" action="" id="J_Form">\n' +
+                    '    <div class="dialog-form-ite" id="form-store_id" style="width: 100%;height:40px;">\n' +
+                    '        <label class="dialog-form-label">标签名称</label>\n' +
+                    '        <div class="dialog-form-input">\n' +
+                    '            <input type="text" id="J_Title" name="title" placeholder="请输入标签名称" style="width: 250px;" autocomplete="off" value="' + title + '">\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '    <div class="dialog-form-item">\n' +
+                    '        <label class="dialog-form-label">&nbsp;</label>\n' +
+                    '        <div class="dialog-form-input">\n' +
+                    '            <a href="javascript:;" id="J_Btn" class="dialog-form-btn">确定</a>\n' +
+                    '            <a href="javascript:layer.closeAll();" class="dialog-form-hollowbtn">取消</a>\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '</form>',
                 success: function () {
                     $('#J_Btn').on('click', function () {
 
                         var title = $.trim($('#J_Title').val());
                         if (!title) {
-                            layer.msg('请输入标签名称', {icon: 5, time: 2000});
+                            layer.msg('请输入标签名称', { icon: 5, time: 2000 });
                             return;
                         }
 
@@ -1714,11 +1538,11 @@ $(function () {
                                 title: $('#J_Title').val()
                             }
                         }).done(function (res) {
-                            if (res.code != 'success') {
-                                layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                            if (res.code != '200') {
+                                layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                                 return;
                             }
-                            layer.alert("保存成功", {icon: 6}, function () {
+                            layer.alert("保存成功", { icon: 6 }, function () {
                                 layer.closeAll();
                                 window.location.reload()
                             });
@@ -1729,12 +1553,12 @@ $(function () {
         });
 
         //删除宣传图
-        $('.activity-adv-section').on('click', '.activity-btn-delete', function(){
+        $('.activity-adv-section').on('click', '.activity-btn-delete', function () {
             $(this).parents('.layui-form-section-item').remove();
         });
 
         //宣传图
-        $('#btn_add_adv').click(function(){
+        $('#btn_add_adv').click(function () {
             var index = $('.layui-form-section-item').length;
             var id_name = "J_TitleImgAdv_" + index;
             var _html = ['<div class="layui-form-section-item">',
@@ -1766,10 +1590,10 @@ $(function () {
 
         //是否开启返利
         form.on('switch(reward)', function (data) {
-            if(!data.elem.checked){
+            if (!data.elem.checked) {
                 $('.reward-section').addClass('hide');
                 $(this).val(0);
-            }else{
+            } else {
                 $('.reward-section').removeClass('hide');
                 $(this).val(1);
             }
@@ -1792,16 +1616,16 @@ $(function () {
                 done: function (res) {
                     layer.closeAll('loading');
 
-                    if (res.code == 'success') {
-                        $this.siblings('img').removeClass('hide').attr({'src': res.data}).data('img', res.data);
-                        $this.siblings('input[type="hidden"]').val(res.data);
+                    if (res.code == '200') {
+                        $this.siblings('img').removeClass('hide').attr({ 'src': res.msg }).data('img', res.msg);
+                        $this.siblings('input[type="hidden"]').val(res.msg);
                     } else {
-                        layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                        layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                     }
                 },
                 error: function () {
                     layer.closeAll('loading');
-                    layer.msg('网络错误', {icon: 5, time: 2000});
+                    layer.msg('网络错误', { icon: 5, time: 2000 });
                 }
             });
         };
@@ -1821,21 +1645,21 @@ $(function () {
                 done: function (res) {
                     layer.closeAll('loading');
 
-                    if (res.code == 'success') {
+                    if (res.code == '200') {
                         _img = '<span class="J_ImgItem">' +
-                            '   <input type="hidden" name="img" value="' + res.data + '"/>' +
-                            '   <a href="javascript:;" class="J_ViewImg" data-img="' + res.data + '">图片</a>' +
-                            '   <a href="javascript:;" data-img="' + res.data + '" class="layui-icon layui-icon-close del J_Del"></a>' +
+                            '   <input type="hidden" name="img" value="' + res.msg + '"/>' +
+                            '   <a href="javascript:;" class="J_ViewImg" data-img="' + res.msg + '">图片</a>' +
+                            '   <a href="javascript:;" data-img="' + res.msg + '" class="layui-icon layui-icon-close del J_Del"></a>' +
                             '</span>';
                         $('#J_Pzbox').append(_img);
                         $('#J_Upload').prop('disabled', true);
                     } else {
-                        layer.msg(res.data || '操作失败', {icon: 5, time: 2000});
+                        layer.msg(res.msg || '操作失败', { icon: 5, time: 2000 });
                     }
                 },
                 error: function () {
                     layer.closeAll('loading');
-                    layer.msg('网络错误', {icon: 5, time: 2000});
+                    layer.msg('网络错误', { icon: 5, time: 2000 });
                 }
             });
         };

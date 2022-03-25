@@ -35,7 +35,7 @@
                         <th>显示/隐藏</th>
                         <th>操作</th>
                     </tr>
-
+                    {{if .data.rows}}
                     {{range .data.rows}}
                     <tr class="info">
                         <td>
@@ -80,6 +80,7 @@
                                 data-uri='{{ urlHtmlAttr "/admin/article/delete/" .ID }}'>删除</a>
                         </td>
                     </tr>
+
                     {{end}}
                     <tr>
                         <td colspan="10" class="buttontd">
@@ -88,11 +89,11 @@
                         </td>
                     </tr>
 
-                    <!-- <else />
-                        <tr>
-                            <td colspan="10" style="text-align:center">无数据..</td>
-                        </tr> -->
-                    </if>
+                    {{else}}
+                    <tr>
+                        <td colspan="10" style="text-align:center">无数据..</td>
+                    </tr>
+                    {{end}}
                 </table>
                 <div class="listpage">
                     {{.page}}
