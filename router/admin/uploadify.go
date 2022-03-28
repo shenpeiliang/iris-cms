@@ -13,5 +13,6 @@ func RegisterUploadify(party iris.Party) {
 
 	uploadifyController := admin.Uploadify{}
 	uploadify.Post("/upload", hero.Handler(uploadifyController.Upload)).Name = "/admin/uploadify/upload"
+	uploadify.Any("/ueditor", hero.Handler(uploadifyController.Ueditor))
 
 }

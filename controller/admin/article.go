@@ -127,6 +127,8 @@ func (a Article) Save(ctx iris.Context) {
 
 	if data.Description != "" {
 		data.Description = gstr.SubStrRune(data.Description, 0, 150)
+	} else {
+		data.Description = util.String{}.SubHtmlText(data.Content, 0, 150)
 	}
 
 	if id > 0 {

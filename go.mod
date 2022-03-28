@@ -13,6 +13,7 @@ require (
 	github.com/chris-ramon/douceur v0.2.0 // indirect
 	github.com/cosmtrek/air v1.29.0 // indirect
 	github.com/dchest/captcha v0.0.0-20200903113550-03f5f0333e1f // indirect
+	github.com/dlclark/regexp2 v1.4.0 // indirect
 	github.com/eknkc/amber v0.0.0-20171010120322-cdade1c07385 // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/fatih/structs v1.1.0 // indirect
@@ -20,6 +21,7 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
+	github.com/gogf/gf v1.16.7 // indirect
 	github.com/gogf/gf/v2 v2.0.4 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.1.2-0.20200519141726-cb32006e483f // indirect

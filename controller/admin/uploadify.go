@@ -45,6 +45,33 @@ func (u Uploadify) Upload(ctx iris.Context) {
 
 }
 
+//富文本编辑器
+func (u Uploadify) Ueditor(ctx iris.Context) {
+	//10M
+	ctx.SetMaxRequestBodySize(10 << 20)
+
+	imgType := ctx.Params().GetStringDefault("img_type", "default")
+
+	destDirectory := "./" + filepath.Join("static/upload", imgType)
+
+	//目录是否存在
+	_, err := os.Stat(destDirectory)
+	if os.IsNotExist(err) {
+		if e := os.MkdirAll(destDirectory, os.ModePerm); e != nil {
+			fmt.Println(e.Error())
+		}
+
+	}
+
+	ctx.UploadFormFiles(destDirectory, beforeSave)
+
+	ctx.JSON(iris.Map{
+		"code": "success",
+		"data": "/" + filepath.Join(destDirectory, upload.FileName),
+	})
+
+}
+
 func beforeSave(ctx iris.Context, file *multipart.FileHeader) {
 
 	//纳秒
