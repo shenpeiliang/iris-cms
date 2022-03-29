@@ -46,11 +46,12 @@ func (u Uploadify) Upload(ctx iris.Context) {
 }
 
 //富文本编辑器
-func (u Uploadify) Ueditor(ctx iris.Context) {
+func (u Uploadify) Editor(ctx iris.Context) {
+
 	//10M
 	ctx.SetMaxRequestBodySize(10 << 20)
 
-	imgType := ctx.Params().GetStringDefault("img_type", "default")
+	imgType := "editor"
 
 	destDirectory := "./" + filepath.Join("static/upload", imgType)
 
@@ -66,8 +67,7 @@ func (u Uploadify) Ueditor(ctx iris.Context) {
 	ctx.UploadFormFiles(destDirectory, beforeSave)
 
 	ctx.JSON(iris.Map{
-		"code": "success",
-		"data": "/" + filepath.Join(destDirectory, upload.FileName),
+		"location": "/" + filepath.Join(destDirectory, upload.FileName),
 	})
 
 }

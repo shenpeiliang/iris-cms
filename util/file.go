@@ -1,12 +1,32 @@
 package util
 
 import (
+	"encoding/json"
 	"io"
 	"io/ioutil"
 	"os"
 )
 
 type File struct {
+}
+
+//读取json文件
+func (f File) ReadJsonFile(filename string) (*File, error) {
+	ret := &File{}
+
+	fileReader, err := os.Open(filename)
+	if err != nil {
+		return ret, err
+	}
+	defer fileReader.Close()
+
+	fr := io.Reader(fileReader)
+
+	if err = json.NewDecoder(fr).Decode(ret); err != nil {
+		return ret, err
+	}
+
+	return ret, nil
 }
 
 //利用ioutil将file直接读取到[]byte中

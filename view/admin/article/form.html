@@ -1,10 +1,23 @@
 {{render "header-layer.html"}}
 
-{{js "/static/util/ueditor/ueditor.config.js" "/static/util/ueditor/ueditor.all.min.js"
-"/static/util/ueditor/lang/zh-cn/zh-cn.js"}}
+{{js "/static/util/tinymce/tinymce.min.js" }}
 
 <script type="text/javascript">
-    UE.getEditor("content");
+
+    var tinyMCE = tinymce.init({
+        selector: '.tinymce-section',
+        language: 'zh_CN',
+        menubar: false,
+        plugins: 'advlist autolink link image lists charmap preview',
+        toolbar: [
+            'bold italic underline strikethrough  | fontselect | fontsizeselect | formatselect  | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | removeformat| undo redo | link unlink image media insertdatetime table  hr pagebreak codesample | code fullscreen preview'
+        ],
+        setup: function (editor) {
+            editor.on('change', function () { editor.save(); });
+        },
+        images_upload_url: '/admin/uploadify/editor'
+    });
+
 </script>
 <div class="main">
     <div class="main_right">
@@ -50,9 +63,9 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">内容：</label>
                         <div class="layui-input-rich">
-                            <script id="content" name="content" type="text/plain" style="width:100%;height:495px;">
+                            <textarea name="content" class="tinymce-section">
                                     {{htmlspecialchars_decode .data.Content}}
-                                </script>
+                            </textarea>
                         </div>
                     </div>
 
