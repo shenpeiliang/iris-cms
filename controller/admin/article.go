@@ -3,6 +3,7 @@ package admin
 import (
 	"cms/model"
 	"cms/util"
+	"fmt"
 	"math"
 	"reflect"
 	"time"
@@ -150,6 +151,93 @@ func (a Article) Save(ctx iris.Context) {
 func (a Article) Delete(ctx iris.Context) {
 	id := ctx.Params().GetUint64Default("id", 0)
 	ok, _ := model.Article{}.Delete(uint(id))
+
+	if !ok {
+		util.Response.Fail(ctx, "操作失败")
+		return
+	}
+
+	util.Response.Success(ctx, "操作成功")
+}
+
+//显示状态
+func (a Article) State(ctx iris.Context) {
+	id := ctx.PostValueInt64Default("id", 0)
+	if id < 1 {
+		util.Response.Fail(ctx, "参数错误")
+		return
+	}
+
+	state := ctx.PostValueIntDefault("is_show", 0)
+
+	data := iris.Map{
+		"is_show": byte(state),
+	}
+
+	where := iris.Map{
+		"id": uint(id),
+	}
+
+	ok, _ := model.Article{}.Update(data, where)
+
+	if !ok {
+		util.Response.Fail(ctx, "操作失败")
+		return
+	}
+
+	util.Response.Success(ctx, "操作成功")
+}
+
+//排序
+func (a Article) Order(ctx iris.Context) {
+	items := ctx.PostValues("arr")
+	fmt.Println(items)
+	if len(items) < 1 {
+		util.Response.Fail(ctx, "参数错误")
+		return
+	}
+
+	var num uint
+
+	for id, paixu := range items {
+		data := iris.Map{
+			"paixu": paixu,
+		}
+
+		where := iris.Map{
+			"id >": id,
+		}
+
+		ok, _ := model.Article{}.Update(data, where)
+		if ok {
+			num++
+		}
+	}
+
+	if num < 1 {
+		util.Response.Fail(ctx, "操作失败")
+		return
+	}
+
+	util.Response.Success(ctx, "操作成功")
+}
+
+//选择删除
+func (a Article) Deletes(ctx iris.Context) {
+	id := ctx.PostValueInt64Default("id", 0)
+	if id < 1 {
+		util.Response.Fail(ctx, "参数错误")
+		return
+	}
+
+	state := ctx.PostValueIntDefault("is_show", 0)
+
+	data := model.Article{
+		ID:     uint(id),
+		IsShow: byte(state),
+	}
+
+	ok, _ := model.Article{}.Save(data)
 
 	if !ok {
 		util.Response.Fail(ctx, "操作失败")

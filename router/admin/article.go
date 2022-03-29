@@ -17,4 +17,8 @@ func RegisterArticle(party iris.Party) {
 	article.Get("/add", hero.Handler(articleController.Form)).Name = "/admin/article/add"
 	article.Get("/edit/{id:uint64}", hero.Handler(articleController.Form)).Name = "/admin/article/edit"
 	article.Get("/delete/{id:uint64}", hero.Handler(articleController.Delete)).Name = "/admin/article/delete"
+
+	article.Post("/state", hero.Handler(articleController.State)).Name = "/admin/article/state"
+	article.Post("/order", hero.Handler(articleController.Order)).Name = "/admin/article/order"
+	article.Post("/deletes", hero.Handler(articleController.Deletes)).Name = "/admin/article/deletes"
 }

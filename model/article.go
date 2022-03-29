@@ -40,6 +40,20 @@ func (a Article) Save(data Article) (ret bool, err error) {
 	return
 }
 
+//指定字段更新
+func (a Article) Update(data, where map[string]interface{}) (ret bool, err error) {
+
+	err = util.DB.Model(Article{}).Where(where).Update(data).Error
+
+	if err != nil {
+		return false, err
+	}
+
+	ret = true
+
+	return
+}
+
 //获取一条记录
 func (a Article) Get(id uint) (Article, error) {
 	var data Article

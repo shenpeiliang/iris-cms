@@ -1237,12 +1237,12 @@ $(function () {
         form.on('switch(state)', function (data) {
             var id = $(this).data('id');
 
-            var uri = $(this).data('uri');
-            var request_uri = uri || state_uri;
+            var url = $(this).data('url');
+            var request_url = url || state_url;
 
             var val = data.elem.checked;
             admin.ajax({
-                url: request_uri,
+                url: request_url,
                 type: 'post',
                 data: {
                     id: id,
