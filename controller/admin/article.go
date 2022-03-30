@@ -3,12 +3,12 @@ package admin
 import (
 	"cms/model"
 	"cms/util"
-	"fmt"
 	"math"
 	"reflect"
 	"time"
 
 	"github.com/gogf/gf/v2/text/gstr"
+	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/kataras/iris/v12"
 	"gopkg.in/go-playground/validator.v9"
 )
@@ -39,9 +39,11 @@ func (a Article) Lists(ctx iris.Context) {
 		where["title like ?"] = title + "%"
 	}
 
-	data, _ := model.Article{}.Page(where, offset, pageCount)
+	order := "paixu desc,id desc"
 
-	count, _ := model.Article{}.Count(where)
+	data, _ := model.Article{}.Page(where, offset, pageCount, order)
+
+	count, _ := model.Article{}.Count(where, order)
 
 	if count > 0 {
 		pageNum = uint(math.Ceil(float64(count) / float64(pageCount)))
@@ -190,22 +192,25 @@ func (a Article) State(ctx iris.Context) {
 
 //排序
 func (a Article) Order(ctx iris.Context) {
-	items := ctx.PostValues("arr")
-	fmt.Println(items)
-	if len(items) < 1 {
+	formData := ctx.FormValues()
+
+	//分解数组
+	arr := util.Array{}.ExtractArray(formData, "arr")
+
+	if len(arr) < 1 {
 		util.Response.Fail(ctx, "参数错误")
 		return
 	}
 
 	var num uint
 
-	for id, paixu := range items {
+	for id, paixu := range arr {
 		data := iris.Map{
 			"paixu": paixu,
 		}
 
 		where := iris.Map{
-			"id >": id,
+			"id": id,
 		}
 
 		ok, _ := model.Article{}.Update(data, where)
@@ -224,22 +229,23 @@ func (a Article) Order(ctx iris.Context) {
 
 //选择删除
 func (a Article) Deletes(ctx iris.Context) {
-	id := ctx.PostValueInt64Default("id", 0)
-	if id < 1 {
-		util.Response.Fail(ctx, "参数错误")
+	ids := ctx.PostValues("ids[]")
+
+	if len(ids) < 1 {
+		util.Response.Fail(ctx, "请选择要操作的记录")
 		return
 	}
 
-	state := ctx.PostValueIntDefault("is_show", 0)
+	var num uint
 
-	data := model.Article{
-		ID:     uint(id),
-		IsShow: byte(state),
+	for _, id := range ids {
+		ok, _ := model.Article{}.Delete(gconv.Uint(id))
+		if ok {
+			num++
+		}
 	}
 
-	ok, _ := model.Article{}.Save(data)
-
-	if !ok {
+	if num < 1 {
 		util.Response.Fail(ctx, "操作失败")
 		return
 	}

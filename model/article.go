@@ -69,7 +69,7 @@ func (a Article) Get(id uint) (Article, error) {
 }
 
 //分页数据
-func (a Article) Page(where map[string]interface{}, offset, limit uint) ([]Article, error) {
+func (a Article) Page(where map[string]interface{}, offset, limit uint, order string) ([]Article, error) {
 	var (
 		data []Article
 	)
@@ -82,7 +82,7 @@ func (a Article) Page(where map[string]interface{}, offset, limit uint) ([]Artic
 		}
 	}
 
-	db.Offset(offset).Limit(limit).Find(&data)
+	db.Offset(offset).Limit(limit).Order(order).Find(&data)
 
 	if len(data) < 1 {
 		return data, errors.New("记录不存在")
@@ -92,7 +92,7 @@ func (a Article) Page(where map[string]interface{}, offset, limit uint) ([]Artic
 }
 
 //统计数
-func (a Article) Count(where map[string]interface{}) (uint, error) {
+func (a Article) Count(where map[string]interface{}, order string) (uint, error) {
 
 	var (
 		count uint
@@ -105,7 +105,7 @@ func (a Article) Count(where map[string]interface{}) (uint, error) {
 		}
 	}
 
-	db.Model(Article{}).Count(&count)
+	db.Model(Article{}).Order(order).Count(&count)
 
 	return count, nil
 }
