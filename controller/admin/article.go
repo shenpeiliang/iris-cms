@@ -4,7 +4,6 @@ import (
 	"cms/model"
 	"cms/util"
 	"math"
-	"reflect"
 	"time"
 
 	"github.com/gogf/gf/v2/text/gstr"
@@ -92,27 +91,7 @@ func (a Article) Save(ctx iris.Context) {
 
 	validate := validator.New()
 	if err := validate.Struct(r); err != nil {
-		//是否空值
-		if _, ok := err.(*validator.InvalidValidationError); ok {
-			util.Response.Fail(ctx, err.Error())
-
-			return
-		}
-
-		errs := err.(validator.ValidationErrors)
-		for _, e := range errs {
-			fieldName := e.Field()
-			//反射获取其他标签信息
-			field, ok := reflect.TypeOf(a).FieldByName(fieldName)
-			errInfo := field.Tag.Get("error-" + e.Tag())
-
-			if ok {
-				util.Response.Fail(ctx, errInfo)
-				return
-			}
-		}
-
-		util.Response.Fail(ctx, err.Error())
+		util.ValidateErrHandle(ctx, r, err)
 		return
 	}
 
