@@ -95,15 +95,33 @@ func (a User) Save(ctx iris.Context) {
 
 	data := model.User{
 		UserName: r.UserName,
-		Password: r.Password,
-		Dateline: now,
-		IsShow:   1,
 	}
 
 	if id > 0 {
 		data.ID = uint(id)
 	} else {
 		data.AddTime = now
+	}
+
+	//用户名是否已经存在
+	user := model.User{}.GetUser(data)
+
+	if user.ID > 0 {
+		util.Response.Fail(ctx, "用户名已经存在")
+		return
+	}
+
+	data.Dateline = now
+	data.IsShow = 1
+
+	//密码处理
+	if r.Password != "" {
+		hashedPassword, err := util.EncryptedPassword(r.Password)
+		if err != nil {
+			util.Response.Fail(ctx, "操作失败"+err.Error())
+			return
+		}
+		data.Password = hashedPassword
 	}
 
 	ok, _ := model.User{}.Save(data)

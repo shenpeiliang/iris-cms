@@ -64,6 +64,14 @@ func (u User) Get(id uint) (User, error) {
 	return data, nil
 }
 
+//获取指定一个用户信息
+func (u User) GetUser(where User) User {
+	var data User
+	util.DB.Where(where).First(&data)
+
+	return data
+}
+
 //分页数据
 func (u User) Page(where map[string]interface{}, offset, limit uint, order string) ([]User, error) {
 	var (
