@@ -1,0 +1,44 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>后台管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    {{css "/static/admin/css/member.css" }}
+
+    {{js "/static/js/jquery.min.js" "/static/js/layui/layui.js" "/static/js/xadmin.js"
+    "/static/admin/js/login.js"}}
+
+</head>
+
+<body>
+    <div class="form_login">
+        <div class="left_logo">
+            <h1>后台管理系统</h1>
+        </div>
+        <div class="warp">
+            <form method="post" action='{{ urlpath "/admin/user/check" }}' class="layui-form">
+                <p>
+                    <input type="text" name="admin_name" class="txt_input username" lay-verify="required"
+                        placeholder="请填写用户名" lay-reqText="请填写用户名" />
+                </p>
+                <p>
+                    <input type="password" name="password" class="txt_input password" lay-verify="required"
+                        placeholder="请填写密码" lay-reqText="请填写密码" />
+                </p>
+                <p>
+                    <input type="text" name="code" class="txt_input code" lay-verify="required" placeholder="请填写验证码"
+                        lay-reqText="请填写验证码" />
+                    <span id="verify"><img src='{{ urlpath "/admin/user/captcha" }}' /></span>
+                </p>
+                <p>
+                    <button type="submit" class="form_btn" lay-submit lay-filter="login">登&nbsp;录</button>
+                </p>
+            </form>
+        </div>
+
+    </div>
+</body>
+
+</html>

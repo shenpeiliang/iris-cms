@@ -1,0 +1,92 @@
+{{render "header.html"}}
+<script type="text/javascript">
+    var del_url = '{{urlpath "/admin/user/deletes"}}';
+    var state_url = '{{urlpath "/admin/user/state"}}';
+</script>
+<div class="main">
+    {{render "left.html"}}
+    <div class="main_right">
+        <div class="right_1">
+            <!--右边导航s-->
+            <div class="right_1_1">
+                <div class="nav_left">
+                    <a href="javascript:;" data-uri='{{urlpath "/admin/user/add"}}'
+                        class="nav_current add event-form">添加{{.data.act}}</a>
+                </div>
+                <div class="nav_right">
+                    <form action='{{.CommonData.CurrentPath}}' method="get" class="layui-form">
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" name="keyword" placeholder="请输入关键词" autocomplete="off" value="">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="submit" value="搜索" class="layui-btn">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--右边导航e-->
+            <div class="right_1_2">
+                <table cellspacing="0" cellpadding="0" class="list_table layui-table layui-form">
+                    <tr>
+                        <th width="30"><input type="checkbox" lay-filter="f_checkall" lay-skin="primary"></th>
+                        <th width="30">ID</th>
+                        <th><i class="require-red">*</i>用户名</th>
+                        <th width="120">添加时间</th>
+                        <th width="120">操作时间</th>
+                        <th>正常/屏蔽</th>
+                        <th>操作</th>
+                    </tr>
+                    {{if .data.rows}}
+                    {{range .data.rows}}
+                    <tr class="info">
+                        <td>
+                            <input type="checkbox" class="J_FCheckbox" name="selected_id[]" lay-skin="primary"
+                                value="{{.ID}}">
+                        </td>
+                        <td>
+                            {{.ID}}
+                        </td>
+                        <td>
+                            {{.UserName}}
+                        </td>
+                        <td>
+                            {{date .AddTime "Y-m-d H:i:s"}}
+                        </td>
+                        <td>
+                            {{date .Dateline "Y-m-d H:i:s"}}
+                        </td>
+
+                        <td>
+                            <input type="checkbox" name="switch" data-id="{{.ID}}" lay-filter="state" lay-skin="switch"
+                                lay-text="正常|屏蔽" {{if .IsShow}}checked{{end}}>
+                        </td>
+                        <td width="160px" class="handle">
+                            <a href="javascript:;" data-uri='{{ urlHtmlAttr "/admin/user/edit/" .ID }}'
+                                class="event-form">编辑</a>
+                            &nbsp;|&nbsp;
+                            <a href="javascript:;" class="event-delete"
+                                data-uri='{{ urlHtmlAttr "/admin/user/delete/" .ID }}'>删除</a>
+                        </td>
+                    </tr>
+
+                    {{end}}
+                    <tr>
+                        <td colspan="7" class="buttontd">
+                            <a href="javascript:void(0);" id="batchDel">删除</a>
+                        </td>
+                    </tr>
+
+                    {{else}}
+                    <tr>
+                        <td colspan="7" style="text-align:center">无数据..</td>
+                    </tr>
+                    {{end}}
+                </table>
+                <div class="listpage">
+                    {{.page}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{render "footer.html"}}

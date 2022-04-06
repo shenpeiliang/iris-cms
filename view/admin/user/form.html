@@ -1,0 +1,37 @@
+{{render "header-layer.html"}}
+
+<div class="main">
+    <div class="main_right">
+        <div class="right_1">
+            <div class="right_1_2">
+                <div class="x-nav">
+                    {{render "page-tool.html"}}
+                </div>
+                <form class="layui-form" action='{{urlpath "/admin/article/save"}}'>
+                    <input type="hidden" name="id" value="{{.data.ID}}" />
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-inline layui-input-inline-long">
+                            <input name="uname" type="text" maxlength="30" placeholder="请输入用户名" lay-verify="required"
+                                lay-reqText="请输入用户名" value="{{.data.UserName | html}}" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码：</label>
+                        <div class="layui-input-inline layui-input-inline-short">
+                            <input name="password" type="password" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="btn-box">
+                        <button class="layui-btn layui-btn-lg" lay-submit lay-filter="saveBtn">确认保存</button>
+                        <a class="layui-btn layui-btn-primary layui-btn-lg"
+                            href="javascript:parent.layer.closeAll();">关闭窗口</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{render "footer.html"}}

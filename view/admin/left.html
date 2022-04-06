@@ -7,5 +7,9 @@
         <dd><a href='{{ urlpath "/admin/article/lists" }}' {{.CommonData.ChildMenu}}>热文推荐</a>
         </dd>
     </dl>
+    <dl class='is_show {{.CommonData.ParentMenu}}'>
+        <dt class="style_4">用户管理</dt>
+        <dd><a href='{{ urlpath "/admin/user/lists" }}' {{.CommonData.ChildMenu}}>用户信息</a></dd>
+    </dl>
 </div>
 {{end}}
