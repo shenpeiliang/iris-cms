@@ -26,9 +26,6 @@ func Common(ctx iris.Context) {
 	ctx.ViewData("CommonData", CommonData{
 		CurrentPath:    path,
 		ControllerPath: contrllerPath,
-
-		ParentMenu: "nav_selected",
-		ChildMenu:  template.HTMLAttr(" class='curent' "),
 	})
 
 	ctx.Next()

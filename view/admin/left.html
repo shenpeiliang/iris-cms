@@ -2,14 +2,16 @@
 <div class="main_left">
     <div class="free-section"></div>
     <div class="left_top"></div>
-    <dl class='is_show {{.CommonData.ParentMenu}}'>
+    <dl class='is_show {{menuParentActive .CommonData.ControllerPath "/admin/article/"}}'>
         <dt class="style_1">图文管理</dt>
-        <dd><a href='{{ urlpath "/admin/article/lists" }}' {{.CommonData.ChildMenu}}>热文推荐</a>
+        <dd><a href='{{ urlpath "/admin/article/lists" }}' {{menuActive .CommonData.CurrentPath "/admin/article/lists"
+                }}>热文推荐</a>
         </dd>
     </dl>
-    <dl class='is_show {{.CommonData.ParentMenu}}'>
+    <dl class='is_show {{menuParentActive .CommonData.ControllerPath "/admin/user/"}}'>
         <dt class="style_4">用户管理</dt>
-        <dd><a href='{{ urlpath "/admin/user/lists" }}' {{.CommonData.ChildMenu}}>用户信息</a></dd>
+        <dd><a href='{{ urlpath "/admin/user/lists" }}' {{menuActive .CommonData.CurrentPath "/admin/user/lists"
+                }}>用户信息</a></dd>
     </dl>
 </div>
 {{end}}

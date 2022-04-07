@@ -71,6 +71,24 @@ func RegisterTemplateFun(tmpl *view.HTMLEngine) {
 		return template.HTML(content)
 	})
 
+	//菜单状态
+	tmpl.AddFunc("menuParentActive", func(currentUrl, menuUrl string) string {
+		if currentUrl == menuUrl {
+			return "nav_selected"
+		}
+
+		return ""
+	})
+
+	//菜单状态
+	tmpl.AddFunc("menuActive", func(currentUrl, menuUrl string) template.HTMLAttr {
+		if currentUrl == menuUrl {
+			return " class='curent' "
+		}
+
+		return ""
+	})
+
 	//时间格式化
 	tmpl.AddFunc("date", func(t uint, format string) (ret string) {
 		if t == 0 {
