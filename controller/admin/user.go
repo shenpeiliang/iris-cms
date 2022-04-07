@@ -4,6 +4,7 @@ import (
 	"cms/model"
 	"cms/util"
 	"math"
+	"strings"
 	"time"
 
 	"github.com/gogf/gf/v2/util/gconv"
@@ -12,7 +13,7 @@ import (
 )
 
 type User struct {
-	UserName string `form:"uname" error-required:"请填写用户名" validate:"required"`
+	UserName string `form:"uname" error-required:"请填写用户名"  error-strlen:"请填写用户名" validate:"required,strlen=5"`
 	Password string `form:"password"`
 }
 
@@ -85,6 +86,10 @@ func (a User) Save(ctx iris.Context) {
 	}
 
 	validate := validator.New()
+
+	//注册自定义验证规则
+	validate.RegisterValidation("strlen", util.StrLenFunc)
+
 	if err := validate.Struct(r); err != nil {
 		util.ValidateErrHandle(ctx, r, err)
 		return
@@ -100,15 +105,12 @@ func (a User) Save(ctx iris.Context) {
 	if id > 0 {
 		data.ID = uint(id)
 	} else {
+		if len(r.Password) < 6 {
+			util.Response.Fail(ctx, "请输入至少6位密码")
+			return
+		}
+
 		data.AddTime = now
-	}
-
-	//用户名是否已经存在
-	user := model.User{}.GetUser(data)
-
-	if user.ID > 0 {
-		util.Response.Fail(ctx, "用户名已经存在")
-		return
 	}
 
 	data.Dateline = now
@@ -116,6 +118,11 @@ func (a User) Save(ctx iris.Context) {
 
 	//密码处理
 	if r.Password != "" {
+		if len(r.Password) < 6 {
+			util.Response.Fail(ctx, "请输入至少6位密码")
+			return
+		}
+
 		hashedPassword, err := util.EncryptedPassword(r.Password)
 		if err != nil {
 			util.Response.Fail(ctx, "操作失败"+err.Error())
@@ -124,8 +131,13 @@ func (a User) Save(ctx iris.Context) {
 		data.Password = hashedPassword
 	}
 
-	ok, _ := model.User{}.Save(data)
-	if !ok {
+	_, err := model.User{}.Save(data)
+	if err != nil {
+		if index := strings.Index(err.Error(), "UNIQUE"); index > -1 {
+			util.Response.Fail(ctx, "用户名重复")
+			return
+		}
+
 		util.Response.Fail(ctx, "操作失败")
 		return
 	}

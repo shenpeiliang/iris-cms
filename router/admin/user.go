@@ -17,4 +17,7 @@ func RegisterUser(party iris.Party) {
 	user.Get("/add", hero.Handler(userController.Form)).Name = "/admin/user/add"
 	user.Get("/edit/{id:uint64}", hero.Handler(userController.Form)).Name = "/admin/user/edit"
 	user.Get("/delete/{id:uint64}", hero.Handler(userController.Delete)).Name = "/admin/user/delete"
+
+	user.Post("/state", hero.Handler(userController.State)).Name = "/admin/user/state"
+	user.Post("/deletes", hero.Handler(userController.Deletes)).Name = "/admin/user/deletes"
 }

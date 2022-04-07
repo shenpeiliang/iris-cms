@@ -2,8 +2,6 @@ package admin
 
 import (
 	"bytes"
-	"reflect"
-	"strconv"
 	"time"
 
 	"cms/middleware"
@@ -18,24 +16,12 @@ import (
 type Login struct {
 	UserName string `json:"admin_name" form:"admin_name" error-required:"请填写用户名" error-strlen:"请填写用户名" validate:"required,strlen=5"`
 	Password string `json:"password" form:"password" error-required:"请填写用户密码" validate:"required"`
-	Code     string `json:"code" form:"code" error-len:"请填写6位长度的验证码" error-required:"请填写6位长度的验证码" validate:"required,len=6"`
+	Code     string `json:"code" form:"code" error-len:"请填写4位长度的验证码" error-required:"请填写4位长度的验证码" validate:"required,len=4"`
 }
 
 //登录
 func (u Login) Index(ctx iris.Context) {
 	ctx.View("admin/login/index.html")
-}
-
-//自定义验证规则
-func strLenFunc(fl validator.FieldLevel) bool {
-	param, _ := strconv.Atoi(fl.Param())
-
-	valueLen := len(fl.Field().String())
-
-	if valueLen < param {
-		return false
-	}
-	return true
 }
 
 //登录检查
@@ -59,32 +45,10 @@ func (u Login) Check(ctx iris.Context) {
 	validate := validator.New()
 
 	//注册自定义验证规则
-	validate.RegisterValidation("strlen", strLenFunc)
+	validate.RegisterValidation("strlen", util.StrLenFunc)
 
 	if err := validate.Struct(data); err != nil {
-		//是否空值
-		if _, ok := err.(*validator.InvalidValidationError); ok {
-			ctx.JSON(map[string]string{
-				"code": strconv.Itoa(iris.StatusInternalServerError),
-				"msg":  err.Error(),
-			})
-			return
-		}
-
-		errs := err.(validator.ValidationErrors)
-		for _, e := range errs {
-			fieldName := e.Field()
-			//反射获取其他标签信息
-			field, ok := reflect.TypeOf(u).FieldByName(fieldName)
-			errInfo := field.Tag.Get("error-" + e.Tag())
-
-			if ok {
-				util.Response.Fail(ctx, errInfo)
-				return
-			}
-		}
-
-		util.Response.Fail(ctx, err.Error())
+		util.ValidateErrHandle(ctx, u, err)
 		return
 	}
 

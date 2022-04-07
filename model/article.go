@@ -6,7 +6,7 @@ import (
 )
 
 type Article struct {
-	ID          uint `gorm:"primary_key"`
+	ID          uint `gorm:"primary_key;AUTO_INCREMENT"`
 	Title       string
 	Description string
 	Content     string
