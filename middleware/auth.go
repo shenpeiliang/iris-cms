@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/sessions"
 )
@@ -9,26 +10,37 @@ var (
 	Session = sessions.New(sessions.Config{
 		Cookie: sessions.DefaultCookieName,
 	})
+
+	user = iris.Map{
+		"uid":   0,
+		"uname": "",
+	}
 )
 
 //用户信息
 func User(ctx iris.Context) {
 	session := Session.Start(ctx)
 
-	uid := session.GetIntDefault("uid", 0)
+	data := session.Get("user")
+	if data != nil {
+		user = gconv.Map(data)
+	}
 
-	ctx.Values().Set("uid", uid)
+	ctx.Values().Set("user", user)
 
-	ctx.ViewData("uid", uid)
+	ctx.ViewData("user", user)
 
 	ctx.Next()
 }
 
 //登录检查
 func Auth(ctx iris.Context) {
-	uid := ctx.Values().GetIntDefault("uid", 0)
+	data := ctx.Values().Get("user")
+	if data != nil {
+		user = gconv.Map(data)
+	}
 
-	if uid == 0 {
+	if user["uid"] == 0 {
 		ctx.Redirect("/admin/login/index")
 		return
 	}

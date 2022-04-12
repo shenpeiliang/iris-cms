@@ -62,13 +62,23 @@ func (u Login) Check(ctx iris.Context) {
 	}
 
 	//写入session
-	middleware.Session.Start(ctx).Set("uid", user.ID)
+	middleware.Session.Start(ctx).Set("user", user)
 
 	result := iris.Map{
 		"url": "/admin/article/lists",
 	}
 
 	util.Response.Success(ctx, "登录成功", result)
+}
+
+//退出
+func (u Login) Out(ctx iris.Context) {
+
+	//写入session
+	middleware.Session.Start(ctx).Clear()
+
+	ctx.Redirect("/admin/login/index")
+
 }
 
 //图形验证码

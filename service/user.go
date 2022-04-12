@@ -24,3 +24,9 @@ func (u User) Login(userName, password string) (model.User, error) {
 
 	return userData, nil
 }
+
+//退出登录
+func (u User) Logout() error {
+
+	return nil
+}
