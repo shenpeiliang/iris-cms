@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"cms/middleware"
+	"cms/service"
 	"cms/util"
 
 	"github.com/dchest/captcha"
@@ -26,15 +27,6 @@ func (u Login) Index(ctx iris.Context) {
 
 //登录检查
 func (u Login) Check(ctx iris.Context) {
-	//表单数据转struct
-	/* if err := ctx.ReadJSON(&u); err != nil {
-		ctx.JSON(map[string]string{
-			"code": "fail",
-			"msg":  err.Error(),
-		})
-
-		return
-	} */
 
 	data := &Login{
 		UserName: ctx.PostValueDefault("admin_name", ""),
@@ -61,6 +53,16 @@ func (u Login) Check(ctx iris.Context) {
 		util.Response.Fail(ctx, "验证码错误")
 		return
 	}
+
+	//用户登录
+	user, err := service.User{}.Login(data.UserName, data.Password)
+	if err != nil {
+		util.Response.Fail(ctx, err.Error())
+		return
+	}
+
+	//写入session
+	middleware.Session.Start(ctx).Set("uid", user.ID)
 
 	result := iris.Map{
 		"url": "/admin/article/lists",

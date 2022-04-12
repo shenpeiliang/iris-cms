@@ -9,7 +9,7 @@ import (
 )
 
 func RegisterUploadify(party iris.Party) {
-	uploadify := party.Party("/uploadify", middleware.Auth, middleware.Common)
+	uploadify := party.Party("/uploadify", middleware.User, middleware.Auth, middleware.Common)
 
 	uploadifyController := admin.Uploadify{}
 	uploadify.Post("/upload", hero.Handler(uploadifyController.Upload)).Name = "/admin/uploadify/upload"

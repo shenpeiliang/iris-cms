@@ -9,7 +9,7 @@ import (
 )
 
 func RegisterUser(party iris.Party) {
-	user := party.Party("/user", middleware.Auth, middleware.Common)
+	user := party.Party("/user", middleware.User, middleware.Auth, middleware.Common)
 	userController := admin.User{}
 
 	user.Get("/lists", hero.Handler(userController.Lists)).Name = "/admin/user/lists"

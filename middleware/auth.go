@@ -11,8 +11,8 @@ var (
 	})
 )
 
-//登录检查
-func Auth(ctx iris.Context) {
+//用户信息
+func User(ctx iris.Context) {
 	session := Session.Start(ctx)
 
 	uid := session.GetIntDefault("uid", 0)
@@ -20,6 +20,18 @@ func Auth(ctx iris.Context) {
 	ctx.Values().Set("uid", uid)
 
 	ctx.ViewData("uid", uid)
+
+	ctx.Next()
+}
+
+//登录检查
+func Auth(ctx iris.Context) {
+	uid := ctx.Values().GetIntDefault("uid", 0)
+
+	if uid == 0 {
+		ctx.Redirect("/admin/login/index")
+		return
+	}
 
 	ctx.Next()
 }
