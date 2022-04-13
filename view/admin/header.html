@@ -24,8 +24,8 @@
         <div class="top_1">
             <ul>
                 <!--<li><a href="/" target="_blank" class="style_13">站点首页</a></li>-->
-                <li><a href="{{ urlpath " /admin/login/out" }}" class="style_11">安全退出</a></li>
-                <li style="float:right"><a href="javascript:void(0);" class="style_12">当前管理者：{{.admin_name}}</a></li>
+                <li><a href='{{ urlpath "/admin/login/out" }}' class="style_11">安全退出</a></li>
+                <li style="float:right"><a href="javascript:void(0);" class="style_12">当前管理者：{{.user.UserName}}</a></li>
             </ul>
         </div>
     </div>

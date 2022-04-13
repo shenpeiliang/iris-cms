@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"time"
 
-	"cms/middleware"
 	"cms/service"
 	"cms/util"
 
@@ -45,7 +44,7 @@ func (u Login) Check(ctx iris.Context) {
 	}
 
 	//session缓存
-	id := middleware.Session.Start(ctx).GetStringDefault("captcha", "")
+	id := service.Session.Start(ctx).GetStringDefault("captcha", "")
 
 	code := ctx.PostValueDefault("code", "")
 
@@ -62,7 +61,7 @@ func (u Login) Check(ctx iris.Context) {
 	}
 
 	//写入session
-	middleware.Session.Start(ctx).Set("user", user)
+	service.Session.Start(ctx).Set("user", user)
 
 	result := iris.Map{
 		"url": "/admin/article/lists",
@@ -75,7 +74,7 @@ func (u Login) Check(ctx iris.Context) {
 func (u Login) Out(ctx iris.Context) {
 
 	//写入session
-	middleware.Session.Start(ctx).Clear()
+	service.Session.Start(ctx).Clear()
 
 	ctx.Redirect("/admin/login/index")
 
@@ -90,7 +89,7 @@ func (u Login) Captcha(ctx iris.Context) {
 	captchaId := captcha.NewLen(4)
 
 	//session缓存
-	middleware.Session.Start(ctx).Set("captcha", captchaId)
+	service.Session.Start(ctx).Set("captcha", captchaId)
 
 	//图形输出
 	ctx.Header("Cache-Control", "no-cache, no-store, must-revalidate")
