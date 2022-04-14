@@ -64,10 +64,12 @@ http://localhost:8080
 
 #### 其他
 
-国内优秀的框架推荐 goframe，可以像 php 一样简单
+国内优秀的框架推荐 goframe，框架开发者自称可以像 php 一样简单（确实是）
 
 https://goframe.org/pages/viewpage.action?pageId=1114399
 
 国内强大的开源框架 go-zero 
 
 https://github.com/zeromicro/go-zero
+
+![image](static/images/go-zero.png)
