@@ -7,10 +7,17 @@ import (
 )
 
 var (
-	Session = sessions.New(sessions.Config{
-		Cookie: sessions.DefaultCookieName,
-	})
-
 	//默认登录用户
 	SessionUser = model.User{}
 )
+
+//初始化session
+func InitSession() *sessions.Sessions {
+	s := sessions.New(sessions.Config{
+		Cookie: sessions.DefaultCookieName,
+	})
+
+	s.UseDatabase(RedisDB)
+
+	return s
+}

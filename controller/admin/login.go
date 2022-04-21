@@ -11,6 +11,7 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 
 	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/sessions"
 )
 
 type Login struct {
@@ -44,7 +45,7 @@ func (u Login) Check(ctx iris.Context) {
 	}
 
 	//session缓存
-	id := service.Session.Start(ctx).GetStringDefault("captcha", "")
+	id := sessions.Get(ctx).GetStringDefault("captcha", "")
 
 	code := ctx.PostValueDefault("code", "")
 
@@ -61,7 +62,7 @@ func (u Login) Check(ctx iris.Context) {
 	}
 
 	//写入session
-	service.Session.Start(ctx).Set("user", user)
+	sessions.Get(ctx).Set("user", user)
 
 	result := iris.Map{
 		"url": "/admin/article/lists",
@@ -74,7 +75,7 @@ func (u Login) Check(ctx iris.Context) {
 func (u Login) Out(ctx iris.Context) {
 
 	//写入session
-	service.Session.Start(ctx).Clear()
+	sessions.Get(ctx).Clear()
 
 	ctx.Redirect("/admin/login/index")
 
@@ -89,7 +90,7 @@ func (u Login) Captcha(ctx iris.Context) {
 	captchaId := captcha.NewLen(4)
 
 	//session缓存
-	service.Session.Start(ctx).Set("captcha", captchaId)
+	sessions.Get(ctx).Set("captcha", captchaId)
 
 	//图形输出
 	ctx.Header("Cache-Control", "no-cache, no-store, must-revalidate")

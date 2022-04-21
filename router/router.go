@@ -4,6 +4,7 @@ import (
 	"cms/function"
 	"cms/middleware"
 	"cms/router/admin"
+	"cms/service"
 
 	"github.com/kataras/iris/v12"
 )
@@ -22,8 +23,8 @@ func RegisterRouter(app *iris.Application) {
 
 	//路由分组
 	app.PartyFunc("/admin", func(party iris.Party) {
-		//请求记录
-		party.Use(middleware.LogRequest)
+		//session初始化 请求记录
+		party.Use(service.InitSession().Handler(), middleware.LogRequest)
 
 		//路由注册
 		admin.InitAdmin(party)
