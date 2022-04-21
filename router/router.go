@@ -2,6 +2,7 @@ package router
 
 import (
 	"cms/function"
+	"cms/middleware"
 	"cms/router/admin"
 
 	"github.com/kataras/iris/v12"
@@ -9,12 +10,6 @@ import (
 
 //路由注册
 func RegisterRouter(app *iris.Application) {
-
-	//路由中间件
-	app.Use(myMiddleware)
-
-	//跨域处理
-
 	//视图文件目录 每次请求时自动重载模板
 	tmpl := iris.HTML("./view", ".html").Reload(true)
 
@@ -27,6 +22,9 @@ func RegisterRouter(app *iris.Application) {
 
 	//路由分组
 	app.PartyFunc("/admin", func(party iris.Party) {
+		//请求记录
+		party.Use(middleware.LogRequest)
+
 		//路由注册
 		admin.InitAdmin(party)
 
@@ -41,9 +39,4 @@ func RegisterRouter(app *iris.Application) {
 		ctx.View("error/500.html")
 	})
 
-}
-
-func myMiddleware(ctx iris.Context) {
-	ctx.Application().Logger().Infof("Runs before %s", ctx.Path())
-	ctx.Next()
 }

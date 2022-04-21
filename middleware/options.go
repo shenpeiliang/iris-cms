@@ -2,6 +2,7 @@ package middleware
 
 import "github.com/kataras/iris/v12"
 
+//跨域
 func Cors(ctx iris.Context) {
 	ctx.Header("Access-Control-Allow-Origin", "*")
 	if ctx.Request().Method == "OPTIONS" {
