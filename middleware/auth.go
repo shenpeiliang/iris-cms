@@ -3,6 +3,7 @@ package middleware
 import (
 	"cms/model"
 	"cms/service"
+	"encoding/json"
 
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/sessions"
@@ -15,7 +16,10 @@ func User(ctx iris.Context) {
 
 	data := sessions.Get(ctx).Get("user")
 	if data != nil {
-		user = data.(model.User)
+		j, err := json.Marshal(data)
+		if err == nil {
+			json.Unmarshal(j, &user)
+		}
 	}
 
 	ctx.Values().Set("user", user)
