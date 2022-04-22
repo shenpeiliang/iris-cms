@@ -10,12 +10,10 @@ import (
 
 //用户信息
 func User(ctx iris.Context) {
-	session := sessions.Get(ctx)
-
 	//默认值
 	user := service.SessionUser
 
-	data := session.Get("user")
+	data := sessions.Get(ctx).Get("user")
 	if data != nil {
 		user = data.(model.User)
 	}

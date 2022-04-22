@@ -17,7 +17,7 @@ func InitSession() *sessions.Sessions {
 		Cookie: sessions.DefaultCookieName,
 	})
 
-	s.UseDatabase(RedisDB)
+	s.UseDatabase(GetRedisDB())
 
 	return s
 }

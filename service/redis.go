@@ -8,7 +8,15 @@ import (
 )
 
 //数据库
-var RedisDB = redis.New(initRedisConfig())
+func GetRedisDB() *redis.Database {
+	r := redis.New(initRedisConfig())
+
+	if r == nil {
+		panic("缓存数据库连接错误")
+	}
+
+	return r
+}
 
 //初始化配置项
 func initRedisConfig() redis.Config {
@@ -33,7 +41,7 @@ func initRedisConfig() redis.Config {
 		}
 
 		if v, has := item["Timeout"]; has {
-			rConfig.Timeout = v.(time.Duration)
+			rConfig.Timeout = time.Duration(v.(int)) * time.Second
 		}
 
 		if v, has := item["MaxActive"]; has {
