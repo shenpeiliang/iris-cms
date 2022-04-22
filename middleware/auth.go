@@ -5,11 +5,12 @@ import (
 	"cms/service"
 
 	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/sessions"
 )
 
 //用户信息
 func User(ctx iris.Context) {
-	session := service.Session.Start(ctx)
+	session := sessions.Get(ctx)
 
 	//默认值
 	user := service.SessionUser

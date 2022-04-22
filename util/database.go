@@ -50,3 +50,46 @@ func init() {
 	//数据库关闭（使用连接池需要禁止关闭）
 	//defer DB.Close()
 }
+
+//初始化配置项
+func initRedisConfig() map[string]interface{} {
+	//配置
+	config := Config{}.GetOther()
+
+	rConfig := make(map[string]interface{}, 0)
+
+	//是否有配置项
+	if c, has := config["Mysql"]; has {
+		item := c.(map[string]interface{})
+		if v, has := item["Host"]; has {
+			rConfig["Host"] = v.(string)
+		}
+
+		if v, has := item["Port"]; has {
+			rConfig["Port"] = v.(string)
+		}
+
+		if v, has := item["User"]; has {
+			rConfig["User"] = v.(string)
+		}
+
+		if v, has := item["Password"]; has {
+			rConfig["Password"] = v.(string)
+		}
+
+		if v, has := item["Database"]; has {
+			rConfig["Database"] = v.(string)
+		}
+
+		if v, has := item["Charset"]; has {
+			rConfig["Charset"] = v.(string)
+		}
+
+		if v, has := item["TablePrefixt"]; has {
+			rConfig["TablePrefixt"] = v.(string)
+		}
+
+	}
+
+	return rConfig
+}
