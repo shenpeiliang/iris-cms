@@ -47,6 +47,6 @@ func LogRequest(ctx iris.Context) {
 
 	curl = curl + fmt.Sprintf(" '%s' --compressed", uri)
 
-	ctx.Application().Logger().Infof(curl)
+	ctx.Application().Logger().Debug(curl)
 	ctx.Next()
 }
