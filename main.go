@@ -13,12 +13,20 @@ func main() {
 	app.Logger().SetLevel("debug")
 
 	//初始化配置
-	config := iris.WithConfiguration(iris.YAML("./config/config.yml"))
+	config := iris.YAML("./config/config.yml")
 
 	//路由注册
 	router.RegisterRouter(app)
 
-	// Listens and serves incoming http requests
-	// on http://localhost:8080.
-	app.Run(iris.Addr(":8080"), config)
+	//默认地址  http://localhost:8080
+	addr := ":8080"
+
+	if s, has := config.GetOther()["Server"]; has {
+		item := s.(map[string]interface{})
+		if v, has := item["Address"]; has {
+			addr = v.(string)
+		}
+	}
+
+	app.Run(iris.Addr(addr), iris.WithConfiguration(config))
 }

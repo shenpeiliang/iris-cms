@@ -5,6 +5,8 @@ DisablePathCorrection: true
 TimeFormat: "Mon, 01 Jan 2006 15:04:05 GMT"
 Charset: "UTF-8"
 Other:
+   Server:
+      Address: ":8080" #服务监听地址
    Mysql:
       Host: "127.0.0.1"
       Port: "3306"
