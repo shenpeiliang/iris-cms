@@ -9,11 +9,18 @@ import (
 func main() {
 	app := iris.Default()
 
-	//调试模式
-	app.Logger().SetLevel("debug")
-
 	//初始化配置
 	config := iris.YAML("./config/config.yml")
+
+	//日志模式
+	leverName := "disable"
+	if s, has := config.GetOther()["Server"]; has {
+		item := s.(map[string]interface{})
+		if v, has := item["LogLevel"]; has {
+			leverName = v.(string)
+		}
+	}
+	app.Logger().SetLevel(leverName)
 
 	//路由注册
 	router.RegisterRouter(app)
