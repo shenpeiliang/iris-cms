@@ -72,7 +72,7 @@ func (u Uploadify) Editor(ctx iris.Context) {
 
 }
 
-func beforeSave(ctx iris.Context, file *multipart.FileHeader) {
+func beforeSave(ctx iris.Context, file *multipart.FileHeader) bool {
 
 	//纳秒
 	unixTime := time.Now().UnixNano()
@@ -82,4 +82,6 @@ func beforeSave(ctx iris.Context, file *multipart.FileHeader) {
 	file.Filename = gconv.String(unixTime) + ".jpg"
 
 	upload.FileName = file.Filename
+
+	return true
 }

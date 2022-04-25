@@ -26,9 +26,6 @@ func initRedisConfig() redis.Config {
 	//默认配置
 	rConfig := redis.DefaultConfig()
 
-	//驱动
-	rConfig.Driver = redis.Redigo()
-
 	//是否有配置项
 	if c, has := config["Redis"]; has {
 		item := c.(map[string]interface{})
@@ -58,10 +55,6 @@ func initRedisConfig() redis.Config {
 
 		if v, has := item["Prefix"]; has {
 			rConfig.Prefix = v.(string)
-		}
-
-		if v, has := item["Delim"]; has {
-			rConfig.Delim = v.(string)
 		}
 
 	}

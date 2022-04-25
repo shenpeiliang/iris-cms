@@ -109,6 +109,6 @@ func (u Login) Captcha(ctx iris.Context) {
 		})
 	}
 
-	ctx.ServeContent(bytes.NewReader(writer.Bytes()), captchaId+".png", time.Time{}, true)
+	ctx.ServeContent(bytes.NewReader(writer.Bytes()), captchaId+".png", time.Time{})
 
 }

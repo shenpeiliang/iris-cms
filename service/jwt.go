@@ -7,10 +7,7 @@ import (
 //密钥
 var mySecret = []byte("My Secret")
 
-var JWT = InitJWT()
-
 //初始化
-//app.Get("/protected", JWT.Serve, protectedHandler)
 func InitJWT() *jwt.Middleware {
 	return jwt.New(jwt.Config{
 		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
@@ -32,7 +29,6 @@ func GetJWTToken(data map[string]interface{}) (tokenString string, err error) {
 }
 
 //拆解token获取原数据
-//user := ctx.Values().Get("jwt")
 func GetJWTData(tokenString interface{}) map[string]interface{} {
 	return tokenString.(*jwt.Token).Claims.(jwt.MapClaims)
 }

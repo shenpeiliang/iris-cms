@@ -188,7 +188,12 @@ func (a User) State(ctx iris.Context) {
 
 //选择删除
 func (a User) Deletes(ctx iris.Context) {
-	ids := ctx.PostValues("ids[]")
+	ids, err := ctx.PostValues("ids[]")
+
+	if err != nil {
+		util.Response.Fail(ctx, "参数缺省")
+		return
+	}
 
 	if len(ids) < 1 {
 		util.Response.Fail(ctx, "请选择要操作的记录")
