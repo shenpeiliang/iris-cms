@@ -92,11 +92,7 @@ func (a Article) Page(where map[string]interface{}, offset, limit int, order str
 }
 
 //统计数
-func (a Article) Count(where map[string]interface{}, order string) (int64, error) {
-
-	var (
-		count int64
-	)
+func (a Article) Count(where map[string]interface{}, order string) (count int64, err error) {
 
 	db := util.DB
 	if len(where) > 0 {
@@ -105,9 +101,9 @@ func (a Article) Count(where map[string]interface{}, order string) (int64, error
 		}
 	}
 
-	db.Model(Article{}).Order(order).Count(&count)
+	err = db.Model(Article{}).Order(order).Count(&count).Error
 
-	return count, nil
+	return
 }
 
 //删除记录
