@@ -1,13 +1,21 @@
 package util
 
-import "github.com/kataras/iris/v12"
+import (
+	"flag"
+
+	"github.com/kataras/iris/v12"
+)
 
 type Config struct {
 }
 
 //获取全部配置项
 func (c Config) GetAll() iris.Configuration {
-	return iris.YAML("./config/config.yml")
+	var p string
+	flag.StringVar(&p, "config", "./config/config.yml", "配置文件")
+	flag.Parse()
+
+	return iris.YAML(p)
 }
 
 //获取其他配置项
