@@ -39,6 +39,9 @@ func main() {
 	// apply diy interfaces on structs or table models
 	//g.ApplyInterface(func(method model.Method) {}, model.User{}, g.GenerateModel("company"))
 
+	//生成全部表结构
+	g.GenerateAllTable()
+
 	// execute the action of code generation
 	g.Execute()
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type User struct {
-	ID       uint   `gorm:"primary_key;AUTO_INCREMENT"`
+	ID       uint   `gorm:"primaryKey"`
 	UserName string `gorm:"column:user_name;unique;not null"`
 	Password string
 	Dateline uint

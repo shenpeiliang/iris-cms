@@ -6,6 +6,7 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 )
 
 var (
@@ -29,6 +30,10 @@ func init() {
 
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		SkipDefaultTransaction: true, //跳过默认事务
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix:   config["TablePrefixt"].(string), //表前缀
+			SingularTable: true,                            //禁用复数表名
+		},
 	})
 	if err != nil {
 		panic("数据库连接错误：" + err.Error())
