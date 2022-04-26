@@ -25,7 +25,7 @@ func (a Article) Save(data Article) (ret bool, err error) {
 		//更新
 		err = util.DB.Model(Article{}).Where(&Article{
 			ID: data.ID,
-		}).Update(data).Error
+		}).Updates(data).Error
 	} else {
 		//新增
 		err = util.DB.Model(Article{}).Save(&data).Error
@@ -43,7 +43,7 @@ func (a Article) Save(data Article) (ret bool, err error) {
 //指定字段更新
 func (a Article) Update(data, where map[string]interface{}) (ret bool, err error) {
 
-	err = util.DB.Model(Article{}).Where(where).Update(data).Error
+	err = util.DB.Model(Article{}).Where(where).Updates(data).Error
 
 	if err != nil {
 		return false, err
@@ -69,7 +69,7 @@ func (a Article) Get(id uint) (Article, error) {
 }
 
 //分页数据
-func (a Article) Page(where map[string]interface{}, offset, limit uint, order string) ([]Article, error) {
+func (a Article) Page(where map[string]interface{}, offset, limit int, order string) ([]Article, error) {
 	var (
 		data []Article
 	)
@@ -92,10 +92,10 @@ func (a Article) Page(where map[string]interface{}, offset, limit uint, order st
 }
 
 //统计数
-func (a Article) Count(where map[string]interface{}, order string) (uint, error) {
+func (a Article) Count(where map[string]interface{}, order string) (int64, error) {
 
 	var (
-		count uint
+		count int64
 	)
 
 	db := util.DB

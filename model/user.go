@@ -21,7 +21,7 @@ func (u User) Save(data User) (ret bool, err error) {
 		//更新
 		err = util.DB.Model(User{}).Where(&User{
 			ID: data.ID,
-		}).Update(data).Error
+		}).Updates(data).Error
 	} else {
 		//新增
 		err = util.DB.Model(User{}).Save(&data).Error
@@ -39,7 +39,7 @@ func (u User) Save(data User) (ret bool, err error) {
 //指定字段更新
 func (u User) Update(data, where map[string]interface{}) (ret bool, err error) {
 
-	err = util.DB.Model(User{}).Where(where).Update(data).Error
+	err = util.DB.Model(User{}).Where(where).Updates(data).Error
 
 	if err != nil {
 		return false, err
@@ -73,7 +73,7 @@ func (u User) GetUser(where User) User {
 }
 
 //分页数据
-func (u User) Page(where map[string]interface{}, offset, limit uint, order string) ([]User, error) {
+func (u User) Page(where map[string]interface{}, offset, limit int, order string) ([]User, error) {
 	var (
 		data []User
 	)
@@ -96,10 +96,10 @@ func (u User) Page(where map[string]interface{}, offset, limit uint, order strin
 }
 
 //统计数
-func (u User) Count(where map[string]interface{}, order string) (uint, error) {
+func (u User) Count(where map[string]interface{}, order string) (int64, error) {
 
 	var (
-		count uint
+		count int64
 	)
 
 	db := util.DB

@@ -24,8 +24,8 @@ func (a Article) Lists(ctx iris.Context) {
 
 	var (
 		pageNum   uint
-		pageCount uint
-		offset    uint
+		pageCount int
+		offset    int
 		title     string
 		where     = make(map[string]interface{})
 	)

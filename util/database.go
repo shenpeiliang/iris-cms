@@ -2,9 +2,10 @@ package util
 
 import (
 	"fmt"
+	"time"
 
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 var (
@@ -26,25 +27,20 @@ func init() {
 		config["Charset"],
 	)
 
-	//修改默认表前缀
-	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
-		return config["TablePrefixt"].(string) + defaultTableName
-	}
-
-	DB, err = gorm.Open("mysql", dsn)
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+		SkipDefaultTransaction: true, //跳过默认事务
+	})
 	if err != nil {
 		panic("数据库连接错误：" + err.Error())
 	}
 
-	//调试模式
-	DB.LogMode(true)
-
-	//禁用表名复数形式
-	DB.SingularTable(true)
+	db, err := DB.DB()
+	if err != nil {
+		panic("数据库连接错误：" + err.Error())
+	}
 
 	//连接池配置
 	if _, has := config["MaxOpenConns"]; has {
-		db := DB.DB()
 
 		//连接池最大连接数
 		db.SetMaxOpenConns(config["MaxOpenConns"].(int))
@@ -52,10 +48,13 @@ func init() {
 		//连接池最大允许的空闲连接数
 		db.SetMaxIdleConns(config["MaxIdleConns"].(int))
 
+		//SetConnMaxLifetime 设置了连接可复用的最大时间。
+		db.SetConnMaxLifetime(time.Hour)
+
 	} else {
 
 		//数据库关闭（使用连接池禁止关闭）
-		defer DB.Close()
+		defer db.Close()
 
 	}
 
