@@ -15,19 +15,12 @@ https://github.com/kataras/iris
 
 #### 配置说明
 
-- .env 配置数据库等
+- .env 配置静态文件版本
 ```
 STATIC_VERSION=1.0.7
-HOST=127.0.0.1
-PORT=3306
-USER=root
-PASSWORD=root
-DATABASE=cms
-CHARSET=UTF8
-TABLE_PREFIX=hs_
 ```
 
-- config/config.yml other项配置业务
+- config/config.yml other项服务配置等
 
 - .air.conf 配置热重启，修改代码后自动编译，安装命令
 ```
@@ -36,13 +29,25 @@ go get -u github.com/cosmtrek/air
 
 #### 运行
 
+下载需要的扩展
+```
+go mod tidy
+```
+
 需要导入数据库文件
 
 ```
 data/cms.sql
 ```
 
-运行程序：
+使用 GORM 的 gen 工具生成表结构体,表结构发生变化需要再次执行同步
+```
+go get -u gorm.io/gen
+
+./generation.sh
+```
+
+启动服务
 ```
 go run main.go
 ```

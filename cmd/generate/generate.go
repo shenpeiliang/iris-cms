@@ -12,7 +12,7 @@ func main() {
 	// specify the output directory (default: "./query")
 	// ### if you want to query without context constrain, set mode gen.WithoutContext ###
 	g := gen.NewGenerator(gen.Config{
-		// OutPath: "../query",
+		OutPath: "./",
 		/* Mode: gen.WithoutContext|gen.WithDefaultQuery*/
 		//if you want the nullable field generation property to be pointer type, set FieldNullable true
 		/* FieldNullable: true,*/
@@ -53,6 +53,11 @@ func main() {
 		},
 	}
 	g.WithDataTypeMap(dataMap)
+
+	//文件名
+	g.WithFileNameStrategy(func(tableName string) (fieldName string) {
+		return string([]byte(tableName)[3:])
+	})
 
 	//生成全部表结构
 	g.GenerateAllTable()

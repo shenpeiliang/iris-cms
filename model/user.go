@@ -1,18 +1,12 @@
 package model
 
 import (
+	"cms/cmd/model"
 	"cms/util"
 	"errors"
 )
 
-type User struct {
-	ID       uint   `gorm:"primaryKey"`
-	UserName string `gorm:"column:user_name;unique;not null"`
-	Password string
-	Dateline uint
-	IsShow   byte
-	AddTime  uint
-}
+type User model.User
 
 //保存数据
 func (u User) Save(data User) (ret bool, err error) {

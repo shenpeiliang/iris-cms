@@ -1,22 +1,12 @@
 package model
 
 import (
+	"cms/cmd/model"
 	"cms/util"
 	"errors"
 )
 
-type Article struct {
-	ID          uint `gorm:"primaryKey"`
-	Title       string
-	Description string
-	Content     string
-	Img         string
-	AddTime     uint `gorm:"column:add_time"`
-	Dateline    uint
-	Click       uint
-	Paixu       uint
-	IsShow      byte `gorm:"column:is_show"`
-}
+type Article model.Article
 
 //保存数据
 func (a Article) Save(data Article) (ret bool, err error) {
