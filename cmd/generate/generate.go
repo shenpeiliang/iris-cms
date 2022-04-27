@@ -2,6 +2,7 @@ package main
 
 import (
 	"cms/util"
+	"strings"
 
 	"gorm.io/gen"
 )
@@ -11,7 +12,7 @@ func main() {
 	// specify the output directory (default: "./query")
 	// ### if you want to query without context constrain, set mode gen.WithoutContext ###
 	g := gen.NewGenerator(gen.Config{
-		OutPath: "../query",
+		// OutPath: "../query",
 		/* Mode: gen.WithoutContext|gen.WithDefaultQuery*/
 		//if you want the nullable field generation property to be pointer type, set FieldNullable true
 		/* FieldNullable: true,*/
@@ -38,6 +39,20 @@ func main() {
 
 	// apply diy interfaces on structs or table models
 	//g.ApplyInterface(func(method model.Method) {}, model.User{}, g.GenerateModel("company"))
+
+	//类型映射
+	dataMap := map[string]func(detailType string) (dataType string){
+		"int": func(detailType string) (dataType string) {
+			if strings.HasSuffix(detailType, "unsigned") {
+				return "uint"
+			}
+			return "int"
+		},
+		"tinyint": func(detailType string) (dataType string) {
+			return "byte"
+		},
+	}
+	g.WithDataTypeMap(dataMap)
 
 	//生成全部表结构
 	g.GenerateAllTable()

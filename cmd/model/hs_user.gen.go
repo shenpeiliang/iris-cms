@@ -8,15 +8,15 @@ const TableNameUser = "hs_user"
 
 // User mapped from table <hs_user>
 type User struct {
-	ID       int32  `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"` // ID编号
+	ID       uint   `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"` // ID编号
 	UserName string `gorm:"column:user_name;not null" json:"user_name"`        // 用户名
 	SmallImg string `gorm:"column:small_img;not null" json:"small_img"`        // 头像
 	Email    string `gorm:"column:email;not null" json:"email"`                // 邮箱
 	Password string `gorm:"column:password;not null" json:"password"`          // 密码
 	Mobile   string `gorm:"column:mobile;not null" json:"mobile"`              // 手机
-	AddTime  int32  `gorm:"column:add_time;not null" json:"add_time"`          // 注册时间
-	Dateline int32  `gorm:"column:dateline;not null" json:"dateline"`          // 修改时间
-	IsShow   bool   `gorm:"column:is_show;not null;default:1" json:"is_show"`  // 是否审核
+	AddTime  uint   `gorm:"column:add_time;not null" json:"add_time"`          // 注册时间
+	Dateline uint   `gorm:"column:dateline;not null" json:"dateline"`          // 修改时间
+	IsShow   byte   `gorm:"column:is_show;not null;default:1" json:"is_show"`  // 是否审核
 }
 
 // TableName User's table name

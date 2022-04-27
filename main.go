@@ -2,6 +2,7 @@ package main
 
 import (
 	"cms/router"
+	"cms/util"
 
 	"github.com/kataras/iris/v12"
 )
@@ -10,7 +11,7 @@ func main() {
 	app := iris.Default()
 
 	//初始化配置
-	config := iris.YAML("./config/config.yml")
+	config := util.Config{}.GetAll()
 
 	//日志模式
 	leverName := "disable"

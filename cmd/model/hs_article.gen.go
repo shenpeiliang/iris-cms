@@ -8,16 +8,16 @@ const TableNameArticle = "hs_article"
 
 // Article mapped from table <hs_article>
 type Article struct {
-	ID          int32  `gorm:"column:id;not null" json:"id"`                   // ID编号
-	Title       string `gorm:"column:title;not null" json:"title"`             // 标题
-	Description string `gorm:"column:description;not null" json:"description"` // 网页描述
-	Content     string `gorm:"column:content;not null" json:"content"`         // 内容
-	Img         string `gorm:"column:img;not null" json:"img"`                 // 主图
-	IsShow      int32  `gorm:"column:is_show;not null" json:"is_show"`         // 是否显示
-	AddTime     int32  `gorm:"column:add_time;not null" json:"add_time"`       // 发布时间
-	Dateline    int32  `gorm:"column:dateline;not null" json:"dateline"`       // 操作时间
-	Paixu       int32  `gorm:"column:paixu;not null" json:"paixu"`             // 排序号
-	Click       int32  `gorm:"column:click;not null" json:"click"`             // 点击
+	ID          uint   `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"` // ID编号
+	Title       string `gorm:"column:title;not null" json:"title"`                // 标题
+	Description string `gorm:"column:description;not null" json:"description"`    // 网页描述
+	Content     string `gorm:"column:content;not null" json:"content"`            // 内容
+	Img         string `gorm:"column:img;not null" json:"img"`                    // 主图
+	IsShow      byte   `gorm:"column:is_show;not null" json:"is_show"`            // 是否显示
+	AddTime     uint   `gorm:"column:add_time;not null" json:"add_time"`          // 发布时间
+	Dateline    uint   `gorm:"column:dateline;not null" json:"dateline"`          // 操作时间
+	Paixu       uint   `gorm:"column:paixu;not null" json:"paixu"`                // 排序号
+	Click       uint   `gorm:"column:click;not null" json:"click"`                // 点击
 }
 
 // TableName Article's table name
