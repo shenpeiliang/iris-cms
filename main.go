@@ -11,7 +11,7 @@ func main() {
 	app := iris.Default()
 
 	//初始化配置
-	config := util.Config{}.GetAll()
+	config := util.Config{}.New()
 
 	//日志模式
 	leverName := "disable"
