@@ -5,6 +5,7 @@ import (
 )
 
 func InitAdmin(party iris.Party) {
+	party = party.Party("/admin")
 	RegisterUser(party)
 	RegisterLogin(party)
 	RegisterArticle(party)

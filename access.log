@@ -152,3 +152,49 @@
 2022-04-28 09:58:20|9.667372ms|200|GET|/static/js/mod/ie_version.js|::1|file=js/mod/ie_version.js|0 B|10 B||
 2022-04-28 09:58:20|924.634619ms|200|GET|/static/admin/images/cloud.jpg|::1|file=admin/images/cloud.jpg|0 B|563.7 KB||
 2022-04-28 09:58:21|15.988536ms|404|GET|/favicon.ico|::1|0 B|3.5 KB||
+2022-04-28 10:11:54|1.124811ms|302|GET|/|::1|0 B|41 B||
+2022-04-28 10:11:54|32.10568ms|200|GET|/admin/login/index|::1|0 B|1.9 KB||
+2022-04-28 10:11:55|42.910823ms|200|GET|/admin/login/captcha|::1|0 B|644 B||
+2022-04-28 10:12:11|4.350643123s|200|GET|/static/js/layui/css/modules/layer/default/loading-0.gif|::1|file=js/layui/css/modules/layer/default/loading-0.gif|0 B|10 B||
+2022-04-28 10:12:11|4.614552893s|200|POST|/admin/login/check|::1|42 B|96 B|admin_name=admin&password=zxc123&code=1470|
+2022-04-28 10:12:11|12.166234ms|200|GET|/static/js/layui/css/modules/layer/default/icon.png|::1|file=js/layui/css/modules/layer/default/icon.png|0 B|10 B||
+2022-04-28 10:12:15|80.294871ms|200|GET|/admin/article/lists|::1|0 B|8.0 KB||
+2022-04-28 10:12:15|11.232165ms|200|GET|/static/js/layui/xadmin.css|::1|file=js/layui/xadmin.css v=1.0.7|0 B|10 B||
+2022-04-28 10:12:15|11.975861ms|200|GET|/static/admin/css/edit.css|::1|file=admin/css/edit.css v=1.0.7|0 B|10 B||
+2022-04-28 10:12:15|14.41541ms|200|GET|/static/admin/css/common.css|::1|file=admin/css/common.css v=1.0.7|0 B|10 B||
+2022-04-28 10:12:15|54.548979ms|200|GET|/static/js/search.js|::1|file=js/search.js v=1.0.7|0 B|10 B||
+2022-04-28 10:12:15|88.266681ms|200|GET|/static/admin/js/index.js|::1|file=admin/js/index.js v=1.0.7|0 B|10.8 KB||
+2022-04-28 10:12:15|57.418642ms|200|GET|/static/js/layui/css/layui.css|::1|file=js/layui/css/layui.css|0 B|12.7 KB||
+2022-04-28 10:12:15|11.084508ms|200|GET|/static/upload/default/1648432012129767507.jpg|::1|file=upload/default/1648432012129767507.jpg|0 B|10 B||
+2022-04-28 10:12:15|111.115029ms|200|GET|/static/upload/default/1649835216393044134.jpg|::1|file=upload/default/1649835216393044134.jpg|0 B|576.0 KB||
+2022-04-28 10:12:15|6.643442ms|200|GET|/static/admin/images/left.jpg|::1|file=admin/images/left.jpg|0 B|10 B||
+2022-04-28 10:12:15|8.392201ms|200|GET|/static/admin/images/logo.png|::1|file=admin/images/logo.png|0 B|10 B||
+2022-04-28 10:12:15|27.221475ms|200|GET|/static/admin/images/icon_new.png|::1|file=admin/images/icon_new.png|0 B|10 B||
+2022-04-28 10:12:15|29.330975ms|200|GET|/static/admin/images/icon_admin.png|::1|file=admin/images/icon_admin.png|0 B|10 B||
+2022-04-28 10:12:15|16.923655ms|200|GET|/static/admin/images/icon_menu.png|::1|file=admin/images/icon_menu.png|0 B|10 B||
+2022-04-28 10:12:15|69.232363ms|200|GET|/static/admin/images/icon_out.png|::1|file=admin/images/icon_out.png|0 B|10 B||
+2022-04-28 10:12:15|8.145146ms|200|GET|/static/admin/images/icon_go.png|::1|file=admin/images/icon_go.png|0 B|10 B||
+2022-04-28 10:12:15|1.958473ms|200|GET|/static/admin/images/icon_member.png|::1|file=admin/images/icon_member.png|0 B|10 B||
+2022-04-28 10:12:15|6.525578ms|200|GET|/static/admin/images/menu.png|::1|file=admin/images/menu.png|0 B|10 B||
+2022-04-28 10:12:17|13.358786ms|200|GET|/static/js/layui/lay/modules/laydate.js|::1|file=js/layui/lay/modules/laydate.js|0 B|10 B||
+2022-04-28 10:12:17|6.219215ms|200|GET|/static/js/layui/font/iconfont.woff2|::1|file=js/layui/font/iconfont.woff2 v=250|0 B|10 B||
+2022-04-28 10:12:17|1.268531ms|200|GET|/static/js/layui/css/modules/laydate/default/laydate.css|::1|file=js/layui/css/modules/laydate/default/laydate.css v=5.0.9|0 B|10 B||
+2022-04-28 10:12:17|10.138741ms|200|GET|/static/js/layui/lay/modules/upload.js|::1|file=js/layui/lay/modules/upload.js|0 B|10 B||
+2022-04-28 10:12:17|2.740918ms|200|GET|/static/js/layui/lay/modules/layedit.js|::1|file=js/layui/lay/modules/layedit.js|0 B|10 B||
+2022-04-28 10:12:19|6.196853ms|200|GET|/static/js/layui/css/modules/layer/default/loading-1.gif|::1|file=js/layui/css/modules/layer/default/loading-1.gif|0 B|10 B||
+2022-04-28 10:12:19|67.3548ms|200|GET|/admin/article/edit/11|::1|id=11|0 B|8.6 KB||
+2022-04-28 10:12:19|266.2354ms|200|GET|/static/util/tinymce/tinymce.min.js|::1|file=util/tinymce/tinymce.min.js v=1.0.7|0 B|119.2 KB||
+2022-04-28 10:12:20|13.426142ms|200|GET|/static/util/tinymce/plugins/advlist/plugin.min.js|::1|file=util/tinymce/plugins/advlist/plugin.min.js|0 B|10 B||
+2022-04-28 10:12:20|27.860588ms|200|GET|/static/util/tinymce/plugins/autolink/plugin.min.js|::1|file=util/tinymce/plugins/autolink/plugin.min.js|0 B|10 B||
+2022-04-28 10:12:20|39.519654ms|200|GET|/static/util/tinymce/langs/zh_CN.js|::1|file=util/tinymce/langs/zh_CN.js|0 B|10 B||
+2022-04-28 10:12:20|75.567952ms|200|GET|/static/util/tinymce/models/dom/model.min.js|::1|file=util/tinymce/models/dom/model.min.js|0 B|22.8 KB||
+2022-04-28 10:12:20|40.903844ms|200|GET|/static/util/tinymce/icons/default/icons.min.js|::1|file=util/tinymce/icons/default/icons.min.js|0 B|10 B||
+2022-04-28 10:12:20|33.732467ms|200|GET|/static/util/tinymce/plugins/link/plugin.min.js|::1|file=util/tinymce/plugins/link/plugin.min.js|0 B|10 B||
+2022-04-28 10:12:20|88.322687ms|200|GET|/static/util/tinymce/plugins/image/plugin.min.js|::1|file=util/tinymce/plugins/image/plugin.min.js|0 B|10 B||
+2022-04-28 10:12:20|13.996581ms|200|GET|/static/util/tinymce/plugins/lists/plugin.min.js|::1|file=util/tinymce/plugins/lists/plugin.min.js|0 B|10 B||
+2022-04-28 10:12:20|3.286855ms|200|GET|/static/util/tinymce/plugins/preview/plugin.min.js|::1|file=util/tinymce/plugins/preview/plugin.min.js|0 B|10 B||
+2022-04-28 10:12:20|7.704467ms|200|GET|/static/util/tinymce/plugins/charmap/plugin.min.js|::1|file=util/tinymce/plugins/charmap/plugin.min.js|0 B|10 B||
+2022-04-28 10:12:20|320.7276ms|200|GET|/static/util/tinymce/themes/silver/theme.min.js|::1|file=util/tinymce/themes/silver/theme.min.js|0 B|109.1 KB||
+2022-04-28 10:12:21|2.828319ms|200|GET|/static/util/tinymce/skins/ui/oxide/skin.min.css|::1|file=util/tinymce/skins/ui/oxide/skin.min.css|0 B|10 B||
+2022-04-28 10:12:23|6.219532ms|200|GET|/static/util/tinymce/skins/ui/oxide/content.min.css|::1|file=util/tinymce/skins/ui/oxide/content.min.css|0 B|10 B||
+2022-04-28 10:12:23|1.401098ms|200|GET|/static/util/tinymce/skins/content/default/content.min.css|::1|file=util/tinymce/skins/content/default/content.min.css|0 B|10 B||

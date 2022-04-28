@@ -22,12 +22,13 @@ func RegisterRouter(app *iris.Application) {
 	app.HandleDir("/static", "./static")
 
 	//路由分组
-	app.PartyFunc("/admin", func(party iris.Party) {
+	app.PartyFunc("/", func(party iris.Party) {
 		//session初始化 请求记录
 		party.Use(service.InitSession().Handler(), middleware.LogRequest)
 
 		//路由注册
-		admin.InitAdmin(party)
+		admin.InitIndex(party) //首页
+		admin.InitAdmin(party) //后台管理
 
 	})
 
