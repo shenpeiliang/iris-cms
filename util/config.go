@@ -2,45 +2,50 @@ package util
 
 import (
 	"flag"
+	"sync"
 
 	"github.com/kataras/iris/v12"
 )
 
 //配置信息
-var globalConfig *iris.Configuration
+var (
+	globalConfig *iris.Configuration
+	once         sync.Once
+)
 
 type Config struct {
 }
 
 //配置信息
 func (c Config) New() iris.Configuration {
-	if globalConfig != nil {
-		return *globalConfig
-	}
+	once.Do(func() {
+		c.loadConfig()
+	})
 
-	return c.GetAll()
+	return *globalConfig
 }
 
-//获取全部配置项
-func (c Config) GetAll() iris.Configuration {
-	var p string
+//加载配置
+func (c Config) loadConfig() {
+	var (
+		configPath  string
+		defaultPath = "./config/config.yml"
+	)
 	//是否被解析过
 	if flag.Parsed() {
-		p = flag.Arg(0)
+		configPath = flag.Arg(0)
 		//fmt.Printf("输入：%v", flag.Args())
-		if p == "" {
-			p = "./config/config.yml"
+		if configPath == "" {
+			configPath = defaultPath
 		}
 	} else {
-		flag.StringVar(&p, "config", "./config/config.yml", "配置文件")
+		flag.StringVar(&configPath, "config", defaultPath, "配置文件")
 		flag.Parse()
 	}
 
-	config := iris.YAML(p)
+	config := iris.YAML(configPath)
 
 	globalConfig = &config
-
-	return config
 
 }
 

@@ -3,8 +3,6 @@ package util
 import (
 	"regexp"
 	"strings"
-
-	"github.com/gogf/gf/text/gstr"
 )
 
 type String struct {
@@ -37,5 +35,34 @@ func (s String) StripTags(src string) string {
 
 //截取html纯内容
 func (s String) SubHtmlText(src string, start int, length int) (substr string) {
-	return gstr.SubStrRune(s.StripTags(src), start, length)
+	return s.SubStrRune(s.StripTags(src), start, length)
+}
+
+//截取字符串
+func (s String) SubStrRune(str string, start int, length ...int) (substr string) {
+	var (
+		runes       = []rune(str)
+		runesLength = len(runes)
+	)
+
+	if start < 0 {
+		start = 0
+	}
+	if start >= runesLength {
+		start = runesLength
+	}
+
+	//最大索引
+	end := runesLength
+
+	if len(length) > 0 {
+		end = start + length[0]
+		if end < start {
+			end = runesLength
+		}
+	}
+	if end > runesLength {
+		end = runesLength
+	}
+	return string(runes[start:end])
 }
